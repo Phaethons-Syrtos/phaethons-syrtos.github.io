@@ -130,6 +130,14 @@ const hasChildren = processedLink.children && processedLink.children.length > 0;
 					closeDropdown(dropdown, trigger, menu);
 				}
 			});
+
+			// 鼠标离开容器时自动收起
+			dropdown.addEventListener('mouseleave', function() {
+				if (trigger.getAttribute('aria-expanded') === 'true') {
+					closeDropdown(dropdown, trigger, menu);
+					trigger.focus();
+				}
+			});
 			
 			// 菜单项键盘导航
 			items.forEach((item, index) => {
