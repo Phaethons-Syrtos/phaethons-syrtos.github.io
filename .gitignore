@@ -41,3 +41,6 @@ package/
 .codex*
 .claude
 .mimocode
+
+# large binary files
+public/assets/videos/
