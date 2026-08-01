@@ -12,7 +12,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "",
 
 	// 站点 URL
-	site_url: "https://firefly.cuteleaf.cn",
+	site_url: "https://phaethon0821.netlify.app",
 
 	// 站点描述
 	description:
