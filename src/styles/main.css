@@ -445,11 +445,11 @@ html {
 
     .btn-regular-dark {
         @apply flex items-center justify-center
-        bg-[oklch(0.45_0.01_var(--hue))] hover:bg-[oklch(0.50_0.01_var(--hue))] active:bg-[oklch(0.55_0.01_var(--hue))]
-        dark:bg-[oklch(0.30_0.02_var(--hue))] dark:hover:bg-[oklch(0.35_0.03_var(--hue))] dark:active:bg-[oklch(0.40_0.03_var(--hue))]
+        bg-[#3D2D5E] hover:bg-[#4C3D7E] active:bg-[#5B4FA8]
+        dark:bg-[#2D2348] dark:hover:bg-[#362958] dark:active:bg-[#3F3066]
     }
     .btn-regular-dark.success {
-        @apply bg-[oklch(0.75_0.14_var(--hue))] dark:bg-[oklch(0.75_0.14_var(--hue))]
+        @apply bg-[#7C3AED] dark:bg-[#A78BFA]
     }
 }
 

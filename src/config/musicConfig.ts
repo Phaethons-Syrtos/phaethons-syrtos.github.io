@@ -9,21 +9,20 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	showInSidebar: true,
 
 	// 使用方式："meting" 使用 Meting API，"local" 使用本地音乐列表
-	mode: "meting",
+	mode: "local",
 
 	// 默认音量 (0-1)
 	volume: 0.7,
 
 	// 播放模式：'list'=列表循环, 'one'=单曲循环, 'random'=随机播放
-	playMode: "list",
+	playMode: "one",
 
 	// 是否显启用歌词
-	showLyrics: true,
+	showLyrics: false,
 
-	// Meting API 配置
+	// Meting API 配置（mode 为 "meting" 时使用，当前使用本地模式，此配置保留备用）
 	meting: {
 		// Meting API 地址
-		// 默认使用官方 API，也可以使用自定义 API
 		api: "https://api.i-meto.com/meting/api?server=:server&type=:type&id=:id&r=:r",
 		// 音乐平台：netease=网易云音乐, tencent=QQ音乐, kugou=酷狗音乐, xiami=虾米音乐, baidu=百度音乐
 		server: "netease",
@@ -48,10 +47,10 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	local: {
 		playlist: [
 			{
-				name: "使一颗心免于哀伤",
-				artist: "知更鸟 / HOYO-MiX / Chevy",
-				url: "/assets/music/使一颗心免于哀伤-哼唱.mp3",
-				cover: "/assets/music/cover/109951169585655912.webp",
+				name: "卡芙卡角色PV BGM",
+				artist: "HOYO-MiX",
+				url: "/assets/music/kafuka-bgm.mp3",
+				cover: "",
 				lrc: "",
 			},
 		],

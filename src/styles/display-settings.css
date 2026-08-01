@@ -129,7 +129,7 @@
 	gap: 0.5rem;
 	font-weight: 600;
 	font-size: 1rem;
-	color: oklch(0.20 0.02 var(--hue));
+	color: #2D164B;
 	transition: all;
 	padding-left: 0;
 	margin-top: 0.75rem;
@@ -138,7 +138,7 @@
 }
 
 .dark #display-setting .section-title {
-	color: oklch(0.96 0.02 var(--hue));
+	color: #C4B5FD;
 }
 
 #display-setting .section-title::before {
