@@ -365,7 +365,7 @@ const hasMultipleImages =
                     class="object-cover h-full w-full"
                     src={src}
                     position={backgroundWallpaper.banner?.position}
-                    widths={[640, 1080]}
+                    widths={[1080, 1920]}
                     sizes="100vw"
                     loading={index === 0 ? "eager" : "lazy"}
                     fetchpriority={index === 0 ? "high" : undefined}
@@ -400,7 +400,7 @@ const hasMultipleImages =
                     class="object-cover h-full w-full"
                     src={backgroundImages.mobile[0]}
                     position={backgroundWallpaper.banner?.position}
-                    widths={[640, 1080]}
+                    widths={[1080, 1920]}
                     sizes="100vw"
                     loading="eager"
                     fetchpriority="high"

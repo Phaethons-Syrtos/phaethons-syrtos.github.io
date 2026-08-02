@@ -832,3 +832,46 @@ html[data-wallpaper-mode="fullscreen"] body:not(.wallpaper-initialized) .w-full.
         transition: top 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s !important;
     }
 }
+
+/* ============================================
+ * 移动端全屏壁纸/视频适配优化
+ * 竖屏手机上避免过度裁剪与放大模糊
+ * ============================================ */
+@media (max-width: 1023px) and (orientation: portrait) {
+    /* 全屏壁纸图片：避免强制拉伸导致模糊，使用 cover 居中裁切 */
+    #wallpaper-wrapper.wallpaper-fullscreen img,
+    #wallpaper-wrapper.wallpaper-fullscreen img[class*="object-cover"] {
+        object-fit: cover !important;
+        object-position: center !important;
+        /* 让图片自然缩放，防止小图被强制拉大 */
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    /* 背景视频：竖屏下居中展示，避免人物被裁出画面 */
+    #bg-player-video {
+        object-fit: cover !important;
+        object-position: center !important;
+    }
+
+    /* 视频容器铺满壁纸区域 */
+    #bg-player,
+    #bg-player-overlay {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+
+/* 移动端横屏时视频同样居中 */
+@media (max-width: 1023px) and (orientation: landscape) {
+    #bg-player-video {
+        object-fit: cover !important;
+        object-position: center !important;
+    }
+
+    #bg-player,
+    #bg-player-overlay {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
