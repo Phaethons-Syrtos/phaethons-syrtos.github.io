@@ -1,5 +1,3 @@
-export const PAGE_SIZE = 8;
-
 export const LIGHT_MODE = "light",
 	DARK_MODE = "dark",
 	SYSTEM_MODE = "system";
@@ -21,6 +19,3 @@ export const MAIN_PANEL_OVERLAPS_BANNER_HEIGHT = 3.5;
 
 // Page width: rem
 export const PAGE_WIDTH = 100;
-
-// Category constants
-export const UNCATEGORIZED = "uncategorized";
