@@ -2,9 +2,9 @@ import type { BackgroundWallpaperConfig } from "@/types/backgroundWallpaper";
 
 export const backgroundWallpaper: BackgroundWallpaperConfig = {
 	// 壁纸模式："banner" 横幅壁纸，"fullscreen" 全屏壁纸，"overlay" 全屏透明，"none" 纯色背景无壁纸
-	mode: "fullscreen",
+	mode: "banner",
 	// 是否启用背景视频播放，配置后将在导航栏显示视频播放按钮
-	playerEnable: true,
+	playerEnable: false,
 	/**
 	 * 背景图片配置
 	 * 图片路径支持三种格式：
@@ -38,19 +38,16 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 	src: {
 		// 桌面背景图片（支持单张或多张随机）
 		// 路径指向 src/assets/images/，Astro 构建时会自动优化
-		desktop: "assets/images/background-2.jpg",
+		desktop: "assets/images/wallpaper-whale-desktop.jpg",
 		// 移动背景图片 — 共用同一张，Astro 构建时生成响应式尺寸
-		mobile: "assets/images/background-2.jpg",
-		// 背景视频播放地址
-		// 支持单个视频路径（字符串）或多个视频循环（数组）
-		// 支持远程视频URL，本地视频请放在 public/assets/videos/ 目录下
-		// playerUrl: "/assets/videos/firefly.mp4",
-		playerUrl: "https://webstatic.mihoyo.com/upload/op-public/2023/08/07/5d5585cd0196144b443546c6b58040c6_3811021075406375920.mp4",
+		mobile: "assets/images/wallpaper-whale-mobile.jpg",
+		// 背景视频播放地址（已关掉播放器，别再挂米哈游的宣传片了）
+		// playerUrl: "/assets/videos/xxx.mp4",
 	},
 	// 横幅壁纸和全屏壁纸共享配置
 	common: {
 		// 壁纸遮罩暗度，让横幅文字显示更清晰，0-1之间，值越大越暗
-		dimOpacity: 0.2,
+		dimOpacity: 0.32,
 		// 多视频播放模式："order" 顺序循环，"random" 随机切换（仅当 playerUrl 为数组时生效）
 		playerMode: "random",
 		// 主页横幅文字
@@ -58,18 +55,18 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 是否启用主页横幅文字
 			enable: true,
 			// 主页横幅主标题
-			title: "May this journey lead us starward！",
+			title: "在深蓝里摸鱼",
 			// 主页横幅主标题字体大小
-			titleSize: "4.5rem",
+			titleSize: "clamp(2rem, 5vw, 4rem)",
 			// 主页横幅副标题
-			subtitle: ["Per aspera ad astra"],
+			subtitle: ["写点代码，记点废话", "token 就是饭", "才没有很期待"],
 			// 主页横幅副标题字体大小
-			subtitleSize: "1.5rem",
+			subtitleSize: "1.35rem",
 			typewriter: {
 				// 是否启用打字机效果
 				// 打字机开启 → 循环显示所有副标题
 				// 打字机关闭 → 每次刷新随机显示一条副标题
-				enable: true,
+				enable: false,
 				// 打字速度（毫秒）
 				speed: 100,
 				// 删除速度（毫秒）
@@ -95,9 +92,9 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		waves: {
 			enable: {
 				// 桌面端是否启用水波纹动画效果
-				desktop: true,
+				desktop: false,
 				// 移动端是否启用水波纹动画效果
-				mobile: true,
+				mobile: false,
 			},
 		},
 		// 渐变过渡效果配置，当水波纹关闭时自动启用，提供壁纸底部到背景色的平滑过渡

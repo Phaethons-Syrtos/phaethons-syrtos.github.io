@@ -6,32 +6,25 @@ const SITE_LANG = "zh_CN";
 
 export const siteConfig: SiteConfig = {
 	// 站点标题
-	title: "FHPR's Astral Express",
+	title: "深蓝工位",
 
 	// 站点副标题
-	subtitle: "",
+	subtitle: "鲸鱼值班室",
 
 	// 站点 URL
 	site_url: "https://phaethon0821.netlify.app",
 
 	// 站点描述
 	description:
-		"FHPR 的个人站，泊在星穹列车的第十节车厢。写点技术，记点日常，偶尔有一条鲸鱼在值班。",
+		"FHPR 的个人站，深蓝色的那种。写点技术，记点日常，值班的是一条鲸鱼。",
 
 	// 站点关键词
-	keywords: [
-		"FHPR",
-		"星穹列车",
-		"个人博客",
-		"Astro",
-		"随笔",
-		"日记",
-	],
+	keywords: ["FHPR", "大肥鱼", "DeepSeek", "个人博客", "日记", "随笔"],
 
 	// 主题色
 	themeColor: {
 		// 主题色的默认色相，范围从 0 到 360。例如：红色：0，青色：200，蓝绿色：250，粉色：345
-		hue: 270,
+		hue: 230,
 		// 默认模式："light" 亮色，"dark" 暗色，"system" 跟随系统
 		defaultMode: "system",
 	},
@@ -54,11 +47,17 @@ export const siteConfig: SiteConfig = {
 	favicon: [
 		{
 			// 图标文件路径
-			src: "/favicon/firefly-32.png",
-			// 可选，指定主题 'light' | 'dark'
-			// theme: "light",
+			src: "/favicon/whale-32.png",
 			// 可选，图标大小
-			// sizes: "32x32",
+			sizes: "32x32",
+		},
+		{
+			src: "/favicon/whale-192.png",
+			sizes: "192x192",
+		},
+		{
+			src: "/favicon/whale-180.png",
+			sizes: "180x180",
 		},
 	],
 
@@ -75,12 +74,12 @@ export const siteConfig: SiteConfig = {
 		// 使用 Astro 图标库时不需要设置 valueDark，图标会自动跟随主题亮暗色切换
 		logo: {
 			type: "image",
-			value: "assets/images/logo/firefly-light.png",
-			valueDark: "assets/images/logo/firefly-dark.png",
-			alt: "🍀",
+			value: "assets/images/logo/whale-logo.png",
+			valueDark: "assets/images/logo/whale-logo.png",
+			alt: "深蓝工位",
 		},
 		// 导航栏标题
-		title: "Astral Express",
+		title: "深蓝工位",
 		// 全宽导航栏，导航栏是否占满屏幕宽度
 		widthFull: false,
 		// 导航菜单对齐方式，left：左对齐，center：居中
