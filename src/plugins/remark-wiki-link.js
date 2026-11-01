@@ -55,7 +55,7 @@ function createPostUrl(contentPath) {
 		.map((segment) => encodeURIComponent(segment))
 		.join("/");
 
-	return `/posts/${encodedPath ? `${encodedPath}/` : ""}`;
+	return `${(process.env.BASE_PATH || "/").replace(/\/$/, "")}/posts/${encodedPath ? `${encodedPath}/` : ""}`;
 }
 
 /**
