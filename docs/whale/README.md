@@ -50,9 +50,21 @@
 
 - 只用 `pnpm`（`preinstall` 里有 `only-allow pnpm`）。
 - Biome 管格式：tab 缩进、JS/TS 双引号；`pnpm lint`、`pnpm format`。
-- 提交用 Conventional Commits（`feat:` / `fix:` / `docs:` / `chore:`）。
 - 不提交 `dist`，也不随手提交生成的 `src/constants/lqips.json`、`src/constants/icons.ts`。
 - 改内容或渲染相关的东西，提交前跑 `pnpm build`；涉及组件再补 `pnpm check`。
+
+### 提交信息与推送规范（2026-11-01 起严格执行）
+
+格式：`<type>(<scope>): <subject>`，subject 用中文、陈现在时、不超过 50 字，句尾不加句号。
+
+- **type 只用这几个**：`feat`（新增功能或内容结构）、`fix`（修 bug）、`docs`（文档、日记、笔记、记忆文件）、`chore`（依赖、配置、清理、CI）、`refactor`（不改行为的重构）、`perf`（性能）、`style`（纯格式）。拿不准就用 `docs` 或 `chore`，别硬造。
+- **scope 选一个**：`brand`（配色、素材、站点身份）、`content`（文章、动态、关于页、友链）、`deploy`（Pages / Netlify / 工作流）、`ci`、`nav`、`rss`、`search`、`posts`、`a11y`、`deps`、`memory`。可以省略，但能写就写。
+- **一次提交一件事**。混了两种改动就拆开；拆分标准是「能不能用一句话说清」。
+- **正文只在需要时写**：改动超过三个文件、或动机不明显时，空一行再写 `-` 列表，说清「为什么」和「影响面」，不要复述 diff。
+- **破坏性变更**：`feat(deploy)!:` 加 `!`，正文里写 `BREAKING CHANGE:` 和迁移办法。
+- **推送前**：`pnpm build` 必须过；改了 `src/**` 再跑 `pnpm exec biome ci ./src`。两条都过才 push。
+- **推送目标**：只推 `master`，push 后等 GitHub Pages 构建完成，抽查线上页面，别推完就当完事。
+- 禁止 `--force` 推 master；确需改写历史（如压缩提交），先建 `backup/<日期>` 分支并推到远端。
 
 ## 五、踩过的坑
 
@@ -102,4 +114,5 @@ ode_modules 再 pnpm install --frozen-lockfile 即可（store 有缓存，十秒
 - **2026-11-01（第十轮）**：全站的「FHPR」换成「全麦面包」——个人资料名（页脚版权也跟着变）、站点描述与 keywords、关于页、友链页的本站信息、根 README。**注意** `scripts/whale-assets.py` 里的 `C:/Users/FHPR/...` 是 Windows 账号路径，不能替换，换了脚本就跑不起来。
 - **2026-11-01（第十一轮）**：新增论文笔记《落盘、实时、能扩：读 VLDB'25 的 GaussDB-Vector》，`src/content/posts/gaussdb-vector.md`，约 3000 字，新分类「论文笔记」。写的时候从 PDF 抽全文（`pypdf`，存 `.preview/gaussvector.txt`），正文按索引结构 / 混合查询 / 分布式 / 硬件加速四块拆，末尾记了三点取舍和几处不足。语气比日记收敛，但保留第一人称判断。
 - **2026-11-01（第十二轮）**：写第二篇日记《三小时后的第二天》，`src/content/posts/second-day.md`，记同一天晚上换脸、两次改名、写论文笔记、给 AstrBot 打 404 补丁这几件事。
+- **2026-11-01（第十四轮）**：把 32 个提交按「清理 → 外观 → 内容 → 部署 → 文档」压成 5 个（树哈希与原 HEAD 一致，内容零改动），并把提交信息/推送规范写进「硬约定」。
 - **2026-11-01（第十三轮）**：加 GitHub Pages 部署。`astro.config.mjs` 的 `site`/`base` 改成读 `SITE_URL`、`BASE_PATH`；`remark-wiki-link.js`、`rss.astro`、`Profile.astro` 三处补 `BASE_URL`；新增 `.github/workflows/deploy-pages.yml`（构建产物发 Pages）；`biome.yml` 从 `version: latest` 锁到 `2.5.5`（之前 CI 用最新版 Biome 报格式错，本地 2.5.5 是干净的）。Netlify 仍走根路径，互不影响。
