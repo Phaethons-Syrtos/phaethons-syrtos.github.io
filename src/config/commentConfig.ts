@@ -2,7 +2,9 @@ import type { CommentConfig } from "../types/commentConfig";
 
 export const commentConfig: CommentConfig = {
 	// 评论系统类型: none, twikoo, waline, giscus, disqus, artalk，默认为none，即不启用评论系统
-	type: "giscus",
+	// 注意：模板默认填的是主题作者 CuteLeaf 的 giscus 仓库，评论会跑到别人仓库里，已改回 none。
+	// 想开评论时，先在本仓库 Settings 里开启 Discussions，再把 giscus.repo / repoId / categoryId 换成自己的。
+	type: "none",
 
 	//twikoo评论系统配置
 	twikoo: {
