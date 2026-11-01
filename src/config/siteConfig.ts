@@ -16,10 +16,10 @@ export const siteConfig: SiteConfig = {
 
 	// 站点描述
 	description:
-		"FHPR 的个人站，深蓝色的那种。写点技术，记点日常，值班的是一条鲸鱼。",
+		"全麦面包 的个人站，深蓝色的那种。写点技术，记点日常，值班的是一条鲸鱼。",
 
 	// 站点关键词
-	keywords: ["FHPR", "大肥鱼", "DeepSeek", "个人博客", "日记", "随笔"],
+	keywords: ["全麦面包", "大肥鱼", "DeepSeek", "个人博客", "日记", "随笔"],
 
 	// 主题色
 	themeColor: {

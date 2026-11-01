@@ -9,7 +9,7 @@ export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/avatar-whale.webp",
 
 	// 名字
-	name: "FHPR",
+	name: "全麦面包",
 
 	// 个人签名
 	bio: "token 就是饭，代码就是水",

@@ -1,4 +1,4 @@
-# FHPR's Astral Express
+# 深海小屋
 
 个人站的源码。线上地址：<https://phaethon0821.netlify.app>
 
