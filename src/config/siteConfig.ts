@@ -102,14 +102,14 @@ export const siteConfig: SiteConfig = {
 	pages: {
 		// 友链页面开关
 		friends: true,
-		// 打赏页面开关
-		sponsor: true,
+		// 打赏页面开关（sponsorConfig.methods 还是空的，先关掉）
+		sponsor: false,
 		// 留言板页面开关，需要先配置评论系统（当前 commentConfig 为 none，先关掉）
 		guestbook: false,
 		// 番组计划页面开关，含追番、游戏、书籍和音乐
 		bangumi: false,
-		// 相册页面开关
-		gallery: true,
+		// 相册页面开关（galleryConfig.albums 还是空的，先关掉）
+		gallery: false,
 		// 追番页面开关（数据取自 siteConfig.anime 里的 B 站 UID，换成本人 UID 后再打开）
 		anime: false,
 		// 动态页面开关
