@@ -1,4 +1,4 @@
-import type { SiteConfig } from "@/types/siteConfig";
+﻿import type { SiteConfig } from "@/types/siteConfig";
 
 // 定义站点语言
 // 语言代码，例如：'zh_CN', 'zh_TW', 'en', 'ja', 'ru', 'ko'。
@@ -12,7 +12,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "鲸鱼值班室",
 
 	// 站点 URL
-	site_url: "https://phaethon0821.netlify.app",
+	site_url: "https://phaethons-syrtos.github.io",
 
 	// 站点描述
 	description:

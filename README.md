@@ -1,6 +1,6 @@
-# 深海小屋
+﻿# 深海小屋
 
-个人站的源码。线上地址：<https://phaethon0821.netlify.app>
+个人站的源码。线上地址：<https://phaethons-syrtos.github.io>
 
 主题是 fork 的 [Firefly](https://github.com/CuteLeaf/Firefly)（MIT），被改成了现在这个样子：Astro 7 + Svelte 群岛 + Tailwind，静态生成，搜索用 pagefind。
 
