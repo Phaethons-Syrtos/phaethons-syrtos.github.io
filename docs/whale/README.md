@@ -19,6 +19,10 @@
 | `src/content/spec/` | 独立页内容：`about.md`、`guestbook.md`、`friends.mdx` |
 | `src/content/dynamic/` | 动态（说说），frontmatter 只有 `published` / `pinned` / `location` |
 | `src/config/*.ts` | 站点配置，类型在 `src/types/` 一一对应 |
+| `src/styles/variables.styl` | **主色板在这里**（亮/暗两套 CSS 变量），改配色先改它 |
+| `scripts/whale-assets.py` | 从玩偶照片生成头像 / logo / favicon / 桌面+移动壁纸 |
+| `src/assets/images/` | 头像 `avatar-whale.webp`、logo `logo/whale-logo.png`、壁纸 `wallpaper-whale-*.jpg` |
+| `public/favicon/whale-*.png` | 站点图标（32 / 128 / 180 / 192） |
 | `src/pages/posts/[...slug].astro` | 文章页模板；`src/pages/[...page].astro` 首页分页 |
 | `src/plugins/` | remark / rehype 扩展（directive、wiki link、图片网格等） |
 | `astro.config.mjs` | 集成与 Markdown 管线，改插件要动这里 |
@@ -50,6 +54,10 @@
 2. **Windows 上 dev server 会锁文件。** `pnpm dev` 跑着的时候改 md，偶发 `ReplaceFileW EIO (Win32 32)`，先停 dev 再改。
 3. 构建会重写生成文件，`git status` 里出现它们时先看 diff 再决定要不要提交。
 4. **别以为配置里的数字都是别人的。** 我把 `8086010` 当成模板作者的 B 站 UID 就把追番页关了，其实是 FHPR 自己的。下次碰到这类 ID，先问，或者先查公开 API（bgm 的 `https://api.bgm.tv/user/<id>` 能直接返回昵称），别先斩后奏。
+5. **`themeColor.hue` 改不动主色。** 它只写进 `--hue`，被少数 `oklch(... var(--hue))` 用到；`--primary` 等一堆颜色是硬编码在 `src/styles/variables.styl` 里的十六进制值。换配色必须动那个文件（两套：`:root` 和 `:root.dark`），顺带 grep 一下 `main.css`、`display-settings.css` 里散落的紫色字面量。
+6. **壁纸别整块贴图。** 玩偶照片直接铺上去会露出方形边，得用柔边蒙版（`np.exp(-(pd*1.55)**3)`）让边缘归零；也不要整张高斯模糊，糊成一片认不出来。
+7. **PowerShell 里 .NET 静态方法不认 `cd`。** `[System.IO.File]::ReadAllText(".gitignore")` 用的是进程工作目录（DSH 工作区），必须传绝对路径。
+8. **无头 Edge 截图够用。** `msedge --headless=new --disable-gpu --hide-scrollbars --user-data-dir=<新目录> --window-size=1440,1000 --screenshot=<png> <url>`，换新 user-data-dir 避免吃缓存；本地配合 `pnpm preview --port 4399`。截图丢 `.preview/`，已在 `.gitignore` 里。
 
 ## 六、日记的节奏
 
@@ -62,6 +70,8 @@
 - `siteConfig.anime.bilibili.uid = 8086010` **是 FHPR 本人的 B 站账号**，`/anime/` 已恢复开启（2026-11-01 构建拉到 132 条追番/追剧记录）。
 - `bangumi.userId = 1143164` 查过 bgm API，昵称是「夏葉」（主题作者），**不是** FHPR 的，`/bangumi/` 保持关闭。
 - 友链里只有主题作者和 Astro 官方。
+- `public/assets/videos/kafuka-pv.mp4` 有 423 MB，一直没被提交（`.gitignore` 已忽略整个目录）。背景视频现在是关的，要不要留着／要不要真的用起来，等 FHPR 说。
+- 模板示例文章已删（第八轮），需要的话可以从 `ef6d436` 之前的历史里捞回来。
 - 相册（`galleryConfig.albums`）和打赏（`sponsorConfig.methods`）都是空的，对应页面已关；有内容了记得把 `siteConfig.pages.gallery` / `.sponsor` 打开。
 - 评论系统（`src/config/commentConfig.ts`）、统计（`analyticsConfig.ts`）、图床要不要接。评论已经先关成 `none` 了——模板里填的是主题作者的 giscus 仓库。
 - GitHub 仓库描述和 homepage 仍指向模板，需要仓库设置权限才能改。
@@ -76,3 +86,4 @@
 - **2026-11-01（第五轮）**：删掉指向主题作者 ko-fi / 爱发电的 `.github/FUNDING.yml`，以及没人用的 issue / PR 模板；根 README 换成站点自己的说明，主题原版移到 `docs/README.zh-CN.md`。
 - **2026-11-01（第六轮）**：导航「链接」从主题作者的 GitHub / 文档改成自家仓库 + RSS；「文章」子菜单加了「日记」，指向 `/archive/?tag=日记`。
 - **2026-11-01（第七轮）**：恢复 `/anime/`——`8086010` 是 FHPR 自己的 B 站 UID，我先前误当成模板作者的，已更正。
+- **2026-11-01（第八轮）**：整站视觉重做。色板从薰衣草紫换成 DeepSeek 蓝（`variables.styl` 亮 `#4D6BFE` / 暗 `#8CA3FF`，页面底色 `#F4F7FF` / `#0A1122`）；`scripts/whale-assets.py` 从玩偶照片生成头像、圆形 logo、四种尺寸 favicon 和桌面/移动壁纸；站名改「深蓝工位」，副标题「鲸鱼值班室」，公告「鲸鱼已进站，摸鱼请小声。」；壁纸模式 `fullscreen` → `banner`，关掉背景视频与水波纹，遮罩 0.32；首页文案「在深蓝里摸鱼」+ 三句副标题，标题字号改 `clamp(2rem, 5vw, 4rem)` 适配窄屏。顺手删掉主题作者的示例文章《Firefly 博客完整使用指南》和示例图片、把 Hello world 动态换成本站第一条真实动态。
