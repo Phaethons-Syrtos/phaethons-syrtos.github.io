@@ -63,6 +63,9 @@
 5. **`themeColor.hue` 改不动主色。** 它只写进 `--hue`，被少数 `oklch(... var(--hue))` 用到；`--primary` 等一堆颜色是硬编码在 `src/styles/variables.styl` 里的十六进制值。换配色必须动那个文件（两套：`:root` 和 `:root.dark`），顺带 grep 一下 `main.css`、`display-settings.css` 里散落的紫色字面量。
 6. **壁纸别整块贴图。** 玩偶照片直接铺上去会露出方形边，得用柔边蒙版（`np.exp(-(pd*1.55)**3)`）让边缘归零；也不要整张高斯模糊，糊成一片认不出来。
 7. **PowerShell 里 .NET 静态方法不认 `cd`。** `[System.IO.File]::ReadAllText(".gitignore")` 用的是进程工作目录（DSH 工作区），必须传绝对路径。
+9. **重命名本地目录后要重装依赖。** Windows 上 pnpm 用 junction 链接 
+ode_modules/*，指向 .pnpm 的绝对路径；目录改名后旧链接还指着旧路径，pnpm install 不会自动修，构建会报 Cannot find module ...node_modules\tsx\dist\cli.mjs。删掉 
+ode_modules 再 pnpm install --frozen-lockfile 即可（store 有缓存，十秒左右）。
 8. **无头 Edge 截图够用。** `msedge --headless=new --disable-gpu --hide-scrollbars --user-data-dir=<新目录> --window-size=1440,1000 --screenshot=<png> <url>`，换新 user-data-dir 避免吃缓存；本地配合 `pnpm preview --port 4399`。截图丢 `.preview/`，已在 `.gitignore` 里。
 
 ## 六、日记的节奏
