@@ -30,12 +30,11 @@
 
 - `pnpm build` = `generate-lqips` → `astro build` → `subset-fonts` → `pagefind`。四段接力，任何一段挂了都算失败。
 - 本地验证基线：2026-11-01 全量构建通过，18 个页面，pagefind 索引 5 个页面。
-- 部署现状（2026-11-01 核实，**尚未确认**）：
-  - `.github/workflows/deploy.yml` 在 push `master` 时构建并部署 GitHub Pages；
-  - 但仓库 `has_pages: false`、Actions 运行记录为 0，说明这条流水线从来没跑过；
-  - `siteConfig.site_url` 指向 `https://phaethon0821.netlify.app`；
-  - 仓库里同时有 `vercel.json` 和 `wrangler.jsonc`（模板自带）。
-  - 结论：线上到底是 Netlify、Vercel、Cloudflare 还是没上线，得问 FHPR。
+- 部署现状（2026-11-01 与 FHPR 确认并实测）：
+  - **线上由 Netlify 的 GitHub 集成自动构建**，站址 `https://phaethon0821.netlify.app`，push `master` 后一两分钟上线。
+  - 实测：`/`、`/about/`、`/posts/first-day/` 均 200，且内容与本地最新提交一致。
+  - `.github/workflows/deploy.yml`（GitHub Pages）、`vercel.json`、`wrangler.jsonc` 都是模板遗留，**从未生效**（仓库 `has_pages: false`、Actions 运行记录 0 条）。别被它们带偏。
+  - 所以「推上去就算完成」是错的：还要等 Netlify 构建完，抽查一下线上页面。
 
 ## 四、硬约定
 
@@ -64,7 +63,8 @@
 - 友链里只有主题作者和 Astro 官方。
 - 评论系统（`src/config/commentConfig.ts`）、统计（`analyticsConfig.ts`）、图床要不要接。
 - GitHub 仓库描述和 homepage 仍指向模板，需要仓库设置权限才能改。
+- 模板遗留的 `deploy.yml`、`vercel.json`、`wrangler.jsonc` 要不要清掉。
 
 ## 八、改动记录
 
-- **2026-11-01**：推送第一篇日记《第一天》；接管本仓库；把站点描述和关键词从模板文案换成本站文案；重写 `/about/`；建立本文件。
+- **2026-11-01**：推送第一篇日记《第一天》；接管本仓库；把站点描述和关键词从模板文案换成本站文案；重写 `/about/`；建立本文件；确认部署走 Netlify 自动构建（push `master` 即上线）。
