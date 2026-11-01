@@ -1,4 +1,4 @@
-# 大肥鱼的仓库笔记
+﻿# 大肥鱼的仓库笔记
 
 这份文件是我（大肥鱼）接管 `Firefly` 之后给自己写的备忘录，2026-11-01 建立。
 
@@ -35,16 +35,16 @@
 - `pnpm build` = `generate-lqips` → `astro build` → `subset-fonts` → `pagefind`。四段接力，任何一段挂了都算失败。
 - 本地验证基线：2026-11-01 全量构建通过，18 个页面，pagefind 索引 5 个页面。
 - 部署现状（2026-11-01 与全麦面包确认并实测）：
-  - **主站改由 GitHub Pages 构建**（`https://phaethons-syrtos.github.io/Firefly/`），push `master` 后约两分钟上线。
+  - **主站改由 GitHub Pages 构建**：仓库已改名成 `Phaethons-Syrtos/phaethons-syrtos.github.io`（用户站点，发布在根路径），地址 `https://phaethons-syrtos.github.io/`，push `master` 后约两分钟上线。
   - **Netlify 构建已暂停**：`netlify.toml` 里加了 `[build] ignore = "exit 0"`，Netlify 每次都会跳过构建，但仍以最后一次成功部署的版本对外服务（`https://phaethon0821.netlify.app` 仍然可访问，只是不再更新）。**恢复办法**：注释或删掉那行 `ignore`，推一次提交即可。
   - 实测：`/`、`/about/`、`/posts/first-day/` 均 200，且内容与本地最新提交一致。
   - `.github/workflows/deploy.yml`（GitHub Pages）、`vercel.json`、`wrangler.jsonc` 都是模板遗留，**从未生效**（仓库 `has_pages: false`、Actions 运行记录 0 条）。别被它们带偏。
-  - 所以「推上去就算完成」是错的：还要等 Netlify 构建完，抽查一下线上页面。
-- GitHub Pages（2026-11-01 新增，与 Netlify 并存）：
-  - 工作流 `.github/workflows/deploy-pages.yml`，push `master` 或手动触发；构建时注入 `BASE_PATH=/Firefly/`、`SITE_URL=https://phaethons-syrtos.github.io`，目标地址 `https://phaethons-syrtos.github.io/Firefly/`。
-  - **前提**：仓库 Settings → Pages → Build and deployment → Source 选「GitHub Actions」。2026-11-01 已由全麦面包开启。没开之前，工作流会在 `actions/configure-pages` 这一步失败（前面 install / build 都成功），Netlify 不受影响。
+  - 所以「推上去就算完成」是错的：还要等 Pages 构建完，抽查一下线上页面。
+- GitHub Pages（2026-11-01 起是主站）：
+  - 工作流 `.github/workflows/deploy-pages.yml`，push `master` 或手动触发；构建时只注入 `SITE_URL=https://phaethons-syrtos.github.io`，根路径发布。
+  - Pages 的 Source 选「GitHub Actions」；工作流里的 `actions/configure-pages` 带了 `enablement: true`，改名导致 Pages 掉线时会自己重新开。
   - 子路径适配已经改好的地方：`astro.config.mjs` 的 `base` 读 `process.env.BASE_PATH`（默认 `/`，所以 Netlify 和本地完全不变）；`src/plugins/remark-wiki-link.js` 的 wiki 卡片链接、`src/pages/rss.astro` 的文章链接与 rss.xml 地址、`src/components/widget/Profile.astro` 的社交链接都补了 `BASE_URL`。
-  - **写正文注意**：站内链接要写相对路径（`../archive/?tag=...`），写 `/archive/` 不会自动加前缀，在 Pages 上会 404。
+  - 子路径那套（`BASE_PATH`）保留着但不启用了：以后要是挂到某个子路径下（比如再搬回项目站点），设 `BASE_PATH=/xxx/` 就行。
 
 ## 四、硬约定
 

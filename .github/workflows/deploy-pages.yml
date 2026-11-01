@@ -31,14 +31,16 @@ jobs:
 
             - run: pnpm install --frozen-lockfile
 
-            # 项目站点跑在 /Firefly/ 子路径下，必须把 base 和 site 一起覆盖；
-            # Netlify 那边不设这两个变量，仍旧构建在根路径。
+            # 仓库已改名成 phaethons-syrtos.github.io，属于「用户站点」，直接发布在根路径，
+            # 所以不需要 BASE_PATH（默认为 "/"），只把 site 指到正式域名。
             - run: pnpm build
               env:
-                  BASE_PATH: /Firefly/
                   SITE_URL: https://phaethons-syrtos.github.io
 
+            # enablement: true 允许在 Pages 尚未开启时由工作流自己开（改名后会掉一次）
             - uses: actions/configure-pages@v5
+              with:
+                  enablement: true
 
             - uses: actions/upload-pages-artifact@v3
               with:
