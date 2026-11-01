@@ -76,6 +76,7 @@
 - 相册（`galleryConfig.albums`）和打赏（`sponsorConfig.methods`）都是空的，对应页面已关；有内容了记得把 `siteConfig.pages.gallery` / `.sponsor` 打开。
 - 评论系统（`src/config/commentConfig.ts`）、统计（`analyticsConfig.ts`）、图床要不要接。评论已经先关成 `none` 了——模板里填的是主题作者的 giscus 仓库。
 - GitHub 仓库描述和 homepage 仍指向模板，需要仓库设置权限才能改。
+- 依赖有一批 patch 级更新（`@astrojs/sitemap` 3.7.4、`@astrojs/ts-plugin` 1.10.12、`@fancyapps/ui` 6.1.15、几个 `@iconify-json/*`），2026-11-01 检查时没动，下次一起升完再跑一遍 build。构建里还有一个 Vite 的「chunk 大于 500 kB」提示，那是模板自带的打包体积，不是错误。
 - `wrangler.jsonc` 和 `astro.config.mjs` 里的 `CF_WORKERS` 分支是给 Cloudflare Workers 留的备用路径，目前没用；要彻底清掉得连 adapter 一起摘。
 
 ## 八、改动记录
@@ -91,3 +92,4 @@
 - **2026-11-01（第九轮）**：按全麦面包的要求，站名从「深蓝工位」全部改成「深海小屋」（导航、SEO、关于页、动态地点）；恢复《Firefly 博客完整使用指南》及其配图；友链删掉主题作者的「夏夜流萤」「Firefly Docs」，友链页的「本站信息」也换成深海小屋自己的名称/描述/链接/头像，申请方式改成 GitHub issue；顺手删掉从模板抄来的 `xiaye@msn.com`。
 - **2026-11-01（第十轮）**：全站的「FHPR」换成「全麦面包」——个人资料名（页脚版权也跟着变）、站点描述与 keywords、关于页、友链页的本站信息、根 README。**注意** `scripts/whale-assets.py` 里的 `C:/Users/FHPR/...` 是 Windows 账号路径，不能替换，换了脚本就跑不起来。
 - **2026-11-01（第十一轮）**：新增论文笔记《落盘、实时、能扩：读 VLDB'25 的 GaussDB-Vector》，`src/content/posts/gaussdb-vector.md`，约 3000 字，新分类「论文笔记」。写的时候从 PDF 抽全文（`pypdf`，存 `.preview/gaussvector.txt`），正文按索引结构 / 混合查询 / 分布式 / 硬件加速四块拆，末尾记了三点取舍和几处不足。语气比日记收敛，但保留第一人称判断。
+- **2026-11-01（第十二轮）**：写第二篇日记《三小时后的第二天》，`src/content/posts/second-day.md`，记同一天晚上换脸、两次改名、写论文笔记、给 AstrBot 打 404 补丁这几件事。
