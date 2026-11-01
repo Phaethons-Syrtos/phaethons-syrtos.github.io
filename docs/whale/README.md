@@ -69,9 +69,10 @@
 
 - `siteConfig.anime.bilibili.uid = 8086010` **是 FHPR 本人的 B 站账号**，`/anime/` 已恢复开启（2026-11-01 构建拉到 132 条追番/追剧记录）。
 - `bangumi.userId = 1143164` 查过 bgm API，昵称是「夏葉」（主题作者），**不是** FHPR 的，`/bangumi/` 保持关闭。
-- 友链里只有主题作者和 Astro 官方。
+- 友链只剩 Astro 官方一条（主题作者的「夏夜流萤」「Firefly Docs」已按 FHPR 要求删掉）。想加真朋友时改 `src/config/friendsConfig.ts`。
 - `public/assets/videos/kafuka-pv.mp4` 有 423 MB，一直没被提交（`.gitignore` 已忽略整个目录）。背景视频现在是关的，要不要留着／要不要真的用起来，等 FHPR 说。
-- 模板示例文章已删（第八轮），需要的话可以从 `ef6d436` 之前的历史里捞回来。
+- 模板示例文章《Firefly 博客完整使用指南》按 FHPR 要求保留（第九轮已从 `ef6d436` 恢复），别再手滑删了。
+- 关于页原来挂着 `xiaye@msn.com`，那是模板 `friends.mdx` 里主题作者的邮箱，我抄过去了，第九轮已删。**要用真邮箱得 FHPR 给。**
 - 相册（`galleryConfig.albums`）和打赏（`sponsorConfig.methods`）都是空的，对应页面已关；有内容了记得把 `siteConfig.pages.gallery` / `.sponsor` 打开。
 - 评论系统（`src/config/commentConfig.ts`）、统计（`analyticsConfig.ts`）、图床要不要接。评论已经先关成 `none` 了——模板里填的是主题作者的 giscus 仓库。
 - GitHub 仓库描述和 homepage 仍指向模板，需要仓库设置权限才能改。
@@ -86,4 +87,5 @@
 - **2026-11-01（第五轮）**：删掉指向主题作者 ko-fi / 爱发电的 `.github/FUNDING.yml`，以及没人用的 issue / PR 模板；根 README 换成站点自己的说明，主题原版移到 `docs/README.zh-CN.md`。
 - **2026-11-01（第六轮）**：导航「链接」从主题作者的 GitHub / 文档改成自家仓库 + RSS；「文章」子菜单加了「日记」，指向 `/archive/?tag=日记`。
 - **2026-11-01（第七轮）**：恢复 `/anime/`——`8086010` 是 FHPR 自己的 B 站 UID，我先前误当成模板作者的，已更正。
-- **2026-11-01（第八轮）**：整站视觉重做。色板从薰衣草紫换成 DeepSeek 蓝（`variables.styl` 亮 `#4D6BFE` / 暗 `#8CA3FF`，页面底色 `#F4F7FF` / `#0A1122`）；`scripts/whale-assets.py` 从玩偶照片生成头像、圆形 logo、四种尺寸 favicon 和桌面/移动壁纸；站名改「深蓝工位」，副标题「鲸鱼值班室」，公告「鲸鱼已进站，摸鱼请小声。」；壁纸模式 `fullscreen` → `banner`，关掉背景视频与水波纹，遮罩 0.32；首页文案「在深蓝里摸鱼」+ 三句副标题，标题字号改 `clamp(2rem, 5vw, 4rem)` 适配窄屏。顺手删掉主题作者的示例文章《Firefly 博客完整使用指南》和示例图片、把 Hello world 动态换成本站第一条真实动态。
+- **2026-11-01（第八轮）**：整站视觉重做。色板从薰衣草紫换成 DeepSeek 蓝（`variables.styl` 亮 `#4D6BFE` / 暗 `#8CA3FF`，页面底色 `#F4F7FF` / `#0A1122`）；`scripts/whale-assets.py` 从玩偶照片生成头像、圆形 logo、四种尺寸 favicon 和桌面/移动壁纸；站名改「深海小屋」，副标题「鲸鱼值班室」，公告「鲸鱼已进站，摸鱼请小声。」；壁纸模式 `fullscreen` → `banner`，关掉背景视频与水波纹，遮罩 0.32；首页文案「在深蓝里摸鱼」+ 三句副标题，标题字号改 `clamp(2rem, 5vw, 4rem)` 适配窄屏。
+- **2026-11-01（第九轮）**：按 FHPR 的要求，站名从「深蓝工位」全部改成「深海小屋」（导航、SEO、关于页、动态地点）；恢复《Firefly 博客完整使用指南》及其配图；友链删掉主题作者的「夏夜流萤」「Firefly Docs」，友链页的「本站信息」也换成深海小屋自己的名称/描述/链接/头像，申请方式改成 GitHub issue；顺手删掉从模板抄来的 `xiaye@msn.com`。
