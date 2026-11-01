@@ -6,13 +6,13 @@ export const profileConfig: ProfileConfig = {
 	// 1. public 目录（以 "/" 开头，不优化）："/assets/images/avatar.webp"
 	// 2. src 目录（不以 "/" 开头，自动优化但会增加构建时间，推荐）："assets/images/avatar.webp"
 	// 3. 远程 URL："https://example.com/avatar.jpg"
-	avatar: "assets/images/avatar-q.jpg",
+	avatar: "assets/images/avatar-whale.webp",
 
 	// 名字
-	name: "FHPR",
+	name: "全麦面包",
 
 	// 个人签名
-	bio: "The answer to life, the universe, and everything",
+	bio: "token 就是饭，代码就是水",
 
 	// 链接配置
 	// 已经预装的图标集：fa7-brands，fa7-regular，fa7-solid，material-symbols，simple-icons

@@ -30,6 +30,13 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 			// 标签
 			LinkPresets.Tags,
+
+			// 日记（按标签筛归档）
+			{
+				name: "日记",
+				url: "/archive/?tag=%E6%97%A5%E8%AE%B0",
+				icon: "material-symbols:menu-book",
+			},
 		],
 	});
 
@@ -87,15 +94,14 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		children: [
 			{
 				name: "GitHub",
-				url: "https://github.com/CuteLeaf/Firefly",
+				url: "https://github.com/Phaethons-Syrtos/Firefly",
 				external: true,
 				icon: "fa7-brands:github",
 			},
 			{
-				name: "Firefly文档",
-				url: "https://docs-firefly.cuteleaf.cn",
-				external: true,
-				icon: "material-symbols:docs",
+				name: "RSS",
+				url: "/rss/",
+				icon: "fa7-solid:rss",
 			},
 		],
 	});

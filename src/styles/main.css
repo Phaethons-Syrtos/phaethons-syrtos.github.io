@@ -445,11 +445,11 @@ html {
 
     .btn-regular-dark {
         @apply flex items-center justify-center
-        bg-[#3D2D5E] hover:bg-[#4C3D7E] active:bg-[#5B4FA8]
-        dark:bg-[#2D2348] dark:hover:bg-[#362958] dark:active:bg-[#3F3066]
+        bg-[#23345C] hover:bg-[#2E4373] active:bg-[#3A55C9]
+        dark:bg-[#1A2540] dark:hover:bg-[#22304F] dark:active:bg-[#2A3A5E]
     }
     .btn-regular-dark.success {
-        @apply bg-[#7C3AED] dark:bg-[#A78BFA]
+        @apply bg-[#4D6BFE] dark:bg-[#8CA3FF]
     }
 }
 

@@ -17,6 +17,14 @@
   "public:assets/images/sponsor/wechat.png": "d5d5d5dad9d7dbd8cf",
   "public:assets/images/sponsor/alipay.png": "8ebbde91bedf93c0e0",
   "public:assets/images/ad/ad1.webp": "a1b8b68a8e918c8f93",
+  "src:assets/images/logo/firefly-light.png": "000000000000000000",
+  "src:assets/images/logo/firefly-dark.png": "ffffffffffffffffff",
+  "src:assets/images/background-2.jpg": "3c3b39373738312e36",
+  "src:assets/images/avatar-q.jpg": "8014567b0b4f8b3760",
+  "src:assets/images/wallpaper-whale-mobile.jpg": "2d3c6d2e3d6d1f2d53",
+  "src:assets/images/wallpaper-whale-desktop.jpg": "25366c25366c1b2952",
+  "src:assets/images/avatar-whale.webp": "5b668959658a5c647a",
+  "src:assets/images/logo/whale-logo.png": "45527a45557c63697d",
   "src:content/posts/images/vitepress.avif": "3d3d43e1e1e7ebe0da",
   "src:content/posts/images/right-grid2.avif": "cbcdcddddcd9d8d7db",
   "src:content/posts/images/obsidian.avif": "3a4145dce3e6e8ded8",
@@ -30,9 +38,5 @@
   "src:content/posts/images/docusaurus.avif": "445347e2e8e3e8e4dc",
   "src:content/posts/images/both-list.avif": "e5e7e4e6e8e7e3e3e5",
   "src:content/posts/images/both-grid.avif": "d5d6d3e6e7e3d8d9e3",
-  "src:content/posts/images/1.avif": "b5b0b3bcb6bbe0e0df",
-  "src:assets/images/logo/firefly-light.png": "000000000000000000",
-  "src:assets/images/logo/firefly-dark.png": "ffffffffffffffffff",
-  "src:assets/images/background-2.jpg": "3c3b39373738312e36",
-  "src:assets/images/avatar-q.jpg": "8014567b0b4f8b3760"
+  "src:content/posts/images/1.avif": "b5b0b3bcb6bbe0e0df"
 }
