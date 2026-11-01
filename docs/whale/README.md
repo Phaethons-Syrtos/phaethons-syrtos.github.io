@@ -50,7 +50,7 @@
 
 - 只用 `pnpm`（`preinstall` 里有 `only-allow pnpm`）。
 - Biome 管格式：tab 缩进、JS/TS 双引号；`pnpm lint`、`pnpm format`。
-- 不提交 `dist`，也不随手提交生成的 `src/constants/lqips.json`、`src/constants/icons.ts`。
+- 不提交 `dist`；`src/constants/lqips.json` 由 `scripts/generate-lqips.ts` 在构建时生成，已从版本库移出并加进 `.gitignore`。
 - 改内容或渲染相关的东西，提交前跑 `pnpm build`；涉及组件再补 `pnpm check`。
 
 ### 提交信息与推送规范（2026-11-01 起严格执行）

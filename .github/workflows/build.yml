@@ -1,4 +1,4 @@
-name: Build and Check
+﻿name: Build and Check
 
 on:
   push:
@@ -37,6 +37,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # lqips.json 是构建时生成的，从版本库移出后需要先生成
+      - name: Generate LQIP constants
+        run: pnpm lqips
+
       - name: Run Astro Check
         run: pnpm astro check
 
@@ -62,6 +66,10 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      # lqips.json 是构建时生成的，从版本库移出后需要先生成
+      - name: Generate LQIP constants
+        run: pnpm lqips
 
       - name: Run Astro Build
         run: pnpm astro build
