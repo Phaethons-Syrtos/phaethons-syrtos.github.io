@@ -80,7 +80,7 @@ export const siteConfig: SiteConfig = {
 			alt: "🍀",
 		},
 		// 导航栏标题
-		title: "Firefly",
+		title: "Astral Express",
 		// 全宽导航栏，导航栏是否占满屏幕宽度
 		widthFull: false,
 		// 导航菜单对齐方式，left：左对齐，center：居中
@@ -110,8 +110,8 @@ export const siteConfig: SiteConfig = {
 		bangumi: false,
 		// 相册页面开关
 		gallery: true,
-		// 追番页面开关
-		anime: true,
+		// 追番页面开关（数据取自 siteConfig.anime 里的 B 站 UID，换成本人 UID 后再打开）
+		anime: false,
 		// 动态页面开关
 		dynamic: true,
 	},
