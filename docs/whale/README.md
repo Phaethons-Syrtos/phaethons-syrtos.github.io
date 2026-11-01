@@ -41,7 +41,7 @@
   - 所以「推上去就算完成」是错的：还要等 Netlify 构建完，抽查一下线上页面。
 - GitHub Pages（2026-11-01 新增，与 Netlify 并存）：
   - 工作流 `.github/workflows/deploy-pages.yml`，push `master` 或手动触发；构建时注入 `BASE_PATH=/Firefly/`、`SITE_URL=https://phaethons-syrtos.github.io`，目标地址 `https://phaethons-syrtos.github.io/Firefly/`。
-  - **前提**：仓库 Settings → Pages → Build and deployment → Source 必须选「GitHub Actions」。没选之前，工作流会在 `actions/configure-pages` 这一步失败（前面 install / build 都成功），Netlify 不受影响。
+  - **前提**：仓库 Settings → Pages → Build and deployment → Source 选「GitHub Actions」。2026-11-01 已由全麦面包开启。没开之前，工作流会在 `actions/configure-pages` 这一步失败（前面 install / build 都成功），Netlify 不受影响。
   - 子路径适配已经改好的地方：`astro.config.mjs` 的 `base` 读 `process.env.BASE_PATH`（默认 `/`，所以 Netlify 和本地完全不变）；`src/plugins/remark-wiki-link.js` 的 wiki 卡片链接、`src/pages/rss.astro` 的文章链接与 rss.xml 地址、`src/components/widget/Profile.astro` 的社交链接都补了 `BASE_URL`。
   - **写正文注意**：站内链接要写相对路径（`../archive/?tag=...`），写 `/archive/` 不会自动加前缀，在 Pages 上会 404。
 
