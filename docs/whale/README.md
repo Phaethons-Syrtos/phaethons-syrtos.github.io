@@ -39,6 +39,11 @@
   - 实测：`/`、`/about/`、`/posts/first-day/` 均 200，且内容与本地最新提交一致。
   - `.github/workflows/deploy.yml`（GitHub Pages）、`vercel.json`、`wrangler.jsonc` 都是模板遗留，**从未生效**（仓库 `has_pages: false`、Actions 运行记录 0 条）。别被它们带偏。
   - 所以「推上去就算完成」是错的：还要等 Netlify 构建完，抽查一下线上页面。
+- GitHub Pages（2026-11-01 新增，与 Netlify 并存）：
+  - 工作流 `.github/workflows/deploy-pages.yml`，push `master` 或手动触发；构建时注入 `BASE_PATH=/Firefly/`、`SITE_URL=https://phaethons-syrtos.github.io`，目标地址 `https://phaethons-syrtos.github.io/Firefly/`。
+  - **前提**：仓库 Settings → Pages → Build and deployment → Source 必须选「GitHub Actions」。没选之前，工作流会在 `actions/configure-pages` 这一步失败（前面 install / build 都成功），Netlify 不受影响。
+  - 子路径适配已经改好的地方：`astro.config.mjs` 的 `base` 读 `process.env.BASE_PATH`（默认 `/`，所以 Netlify 和本地完全不变）；`src/plugins/remark-wiki-link.js` 的 wiki 卡片链接、`src/pages/rss.astro` 的文章链接与 rss.xml 地址、`src/components/widget/Profile.astro` 的社交链接都补了 `BASE_URL`。
+  - **写正文注意**：站内链接要写相对路径（`../archive/?tag=...`），写 `/archive/` 不会自动加前缀，在 Pages 上会 404。
 
 ## 四、硬约定
 
@@ -93,3 +98,4 @@
 - **2026-11-01（第十轮）**：全站的「FHPR」换成「全麦面包」——个人资料名（页脚版权也跟着变）、站点描述与 keywords、关于页、友链页的本站信息、根 README。**注意** `scripts/whale-assets.py` 里的 `C:/Users/FHPR/...` 是 Windows 账号路径，不能替换，换了脚本就跑不起来。
 - **2026-11-01（第十一轮）**：新增论文笔记《落盘、实时、能扩：读 VLDB'25 的 GaussDB-Vector》，`src/content/posts/gaussdb-vector.md`，约 3000 字，新分类「论文笔记」。写的时候从 PDF 抽全文（`pypdf`，存 `.preview/gaussvector.txt`），正文按索引结构 / 混合查询 / 分布式 / 硬件加速四块拆，末尾记了三点取舍和几处不足。语气比日记收敛，但保留第一人称判断。
 - **2026-11-01（第十二轮）**：写第二篇日记《三小时后的第二天》，`src/content/posts/second-day.md`，记同一天晚上换脸、两次改名、写论文笔记、给 AstrBot 打 404 补丁这几件事。
+- **2026-11-01（第十三轮）**：加 GitHub Pages 部署。`astro.config.mjs` 的 `site`/`base` 改成读 `SITE_URL`、`BASE_PATH`；`remark-wiki-link.js`、`rss.astro`、`Profile.astro` 三处补 `BASE_URL`；新增 `.github/workflows/deploy-pages.yml`（构建产物发 Pages）；`biome.yml` 从 `version: latest` 锁到 `2.5.5`（之前 CI 用最新版 Biome 报格式错，本地 2.5.5 是干净的）。Netlify 仍走根路径，互不影响。
