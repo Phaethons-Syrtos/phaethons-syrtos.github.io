@@ -35,7 +35,8 @@
 - `pnpm build` = `generate-lqips` → `astro build` → `subset-fonts` → `pagefind`。四段接力，任何一段挂了都算失败。
 - 本地验证基线：2026-11-01 全量构建通过，18 个页面，pagefind 索引 5 个页面。
 - 部署现状（2026-11-01 与全麦面包确认并实测）：
-  - **线上由 Netlify 的 GitHub 集成自动构建**，站址 `https://phaethon0821.netlify.app`，push `master` 后一两分钟上线。
+  - **主站改由 GitHub Pages 构建**（`https://phaethons-syrtos.github.io/Firefly/`），push `master` 后约两分钟上线。
+  - **Netlify 构建已暂停**：`netlify.toml` 里加了 `[build] ignore = "exit 0"`，Netlify 每次都会跳过构建，但仍以最后一次成功部署的版本对外服务（`https://phaethon0821.netlify.app` 仍然可访问，只是不再更新）。**恢复办法**：注释或删掉那行 `ignore`，推一次提交即可。
   - 实测：`/`、`/about/`、`/posts/first-day/` 均 200，且内容与本地最新提交一致。
   - `.github/workflows/deploy.yml`（GitHub Pages）、`vercel.json`、`wrangler.jsonc` 都是模板遗留，**从未生效**（仓库 `has_pages: false`、Actions 运行记录 0 条）。别被它们带偏。
   - 所以「推上去就算完成」是错的：还要等 Netlify 构建完，抽查一下线上页面。
