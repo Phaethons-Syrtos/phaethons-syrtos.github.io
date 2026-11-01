@@ -71,3 +71,4 @@
 - **2026-11-01（第二轮）**：导航栏标题 `Firefly` → `Astral Express`；关掉用着模板作者 B 站 UID 的 `/anime/`；新增 `netlify.toml` 补安全头和静态资源长缓存；删掉从未生效的 `.github/workflows/deploy.yml` 和 `vercel.json`。
 - **2026-11-01（第三轮）**：评论系统从模板作者的 giscus 仓库改成 `none`，同步关掉 `/guestbook/`（没有后端，页面只是个空壳）。
 - **2026-11-01（第四轮）**：关掉空壳页面 `/gallery/`（相册 0 张）和 `/sponsor/`（打赏方式 0 个）；文章底部的打赏按钮随之消失。
+- **2026-11-01（第五轮）**：删掉指向主题作者 ko-fi / 爱发电的 `.github/FUNDING.yml`，以及没人用的 issue / PR 模板；根 README 换成站点自己的说明，主题原版移到 `docs/README.zh-CN.md`。
