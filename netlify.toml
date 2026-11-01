@@ -1,0 +1,26 @@
+# Netlify 配置：只加响应头，不改构建设置（构建仍走站点后台的 pnpm build / dist）
+# 安全头照搬模板里 vercel.json 的那一套，另加静态资源长缓存
+
+# 2026-11-01：Netlify 构建暂停，站点改由 GitHub Pages 发布。
+# 线上仍是最后一次成功部署的版本，不会掉线，只是不再跟着仓库更新。
+# 想恢复 Netlify 构建：注释或删掉下面 ignore 这一行，推一次提交即可。
+[build]
+  ignore = "exit 0"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=()"
+
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/pagefind/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

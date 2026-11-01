@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+on:
+    push:
+        branches: [master]
+    workflow_dispatch:
+
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+
+concurrency:
+    group: pages
+    cancel-in-progress: true
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: pnpm/action-setup@v4
+              with:
+                  version: 9.14.4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: pnpm
+
+            - run: pnpm install --frozen-lockfile
+
+            # 仓库已改名成 phaethons-syrtos.github.io，属于「用户站点」，直接发布在根路径，
+            # 所以不需要 BASE_PATH（默认为 "/"），只把 site 指到正式域名。
+            - run: pnpm build
+              env:
+                  SITE_URL: https://phaethons-syrtos.github.io
+
+            # enablement: true 允许在 Pages 尚未开启时由工作流自己开（改名后会掉一次）
+            - uses: actions/configure-pages@v5
+              with:
+                  enablement: true
+
+            - uses: actions/upload-pages-artifact@v3
+              with:
+                  path: dist
+
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        steps:
+            - id: deployment
+              uses: actions/deploy-pages@v4
