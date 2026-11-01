@@ -49,6 +49,7 @@
 1. **`数字:数字` 会变成 HTML 标签。** `remark-directive` 把 `18:52` 里的 `:52` 当成 textDirective，渲染出 `<52></52>`。写时间用全角冒号（`18：52`）或加空格。构建后可以用 `<\d+>` 正则在 `dist/**/*.html` 里自查。
 2. **Windows 上 dev server 会锁文件。** `pnpm dev` 跑着的时候改 md，偶发 `ReplaceFileW EIO (Win32 32)`，先停 dev 再改。
 3. 构建会重写生成文件，`git status` 里出现它们时先看 diff 再决定要不要提交。
+4. **别以为配置里的数字都是别人的。** 我把 `8086010` 当成模板作者的 B 站 UID 就把追番页关了，其实是 FHPR 自己的。下次碰到这类 ID，先问，或者先查公开 API（bgm 的 `https://api.bgm.tv/user/<id>` 能直接返回昵称），别先斩后奏。
 
 ## 六、日记的节奏
 
@@ -58,7 +59,8 @@
 
 ## 七、待确认（问过 FHPR 再动）
 
-- `siteConfig.anime.bilibili.uid = 8086010`、`bangumi.userId = 1143164` 是模板作者的 ID，不是 FHPR 的。`/anime/` 已经关掉（关着时页面重定向到 `/404/`，导航和 sitemap 都不收录），等换成本人 UID 再开。
+- `siteConfig.anime.bilibili.uid = 8086010` **是 FHPR 本人的 B 站账号**，`/anime/` 已恢复开启（2026-11-01 构建拉到 132 条追番/追剧记录）。
+- `bangumi.userId = 1143164` 查过 bgm API，昵称是「夏葉」（主题作者），**不是** FHPR 的，`/bangumi/` 保持关闭。
 - 友链里只有主题作者和 Astro 官方。
 - 相册（`galleryConfig.albums`）和打赏（`sponsorConfig.methods`）都是空的，对应页面已关；有内容了记得把 `siteConfig.pages.gallery` / `.sponsor` 打开。
 - 评论系统（`src/config/commentConfig.ts`）、统计（`analyticsConfig.ts`）、图床要不要接。评论已经先关成 `none` 了——模板里填的是主题作者的 giscus 仓库。
@@ -73,3 +75,4 @@
 - **2026-11-01（第四轮）**：关掉空壳页面 `/gallery/`（相册 0 张）和 `/sponsor/`（打赏方式 0 个）；文章底部的打赏按钮随之消失。
 - **2026-11-01（第五轮）**：删掉指向主题作者 ko-fi / 爱发电的 `.github/FUNDING.yml`，以及没人用的 issue / PR 模板；根 README 换成站点自己的说明，主题原版移到 `docs/README.zh-CN.md`。
 - **2026-11-01（第六轮）**：导航「链接」从主题作者的 GitHub / 文档改成自家仓库 + RSS；「文章」子菜单加了「日记」，指向 `/archive/?tag=日记`。
+- **2026-11-01（第七轮）**：恢复 `/anime/`——`8086010` 是 FHPR 自己的 B 站 UID，我先前误当成模板作者的，已更正。

@@ -110,8 +110,8 @@ export const siteConfig: SiteConfig = {
 		bangumi: false,
 		// 相册页面开关（galleryConfig.albums 还是空的，先关掉）
 		gallery: false,
-		// 追番页面开关（数据取自 siteConfig.anime 里的 B 站 UID，换成本人 UID 后再打开）
-		anime: false,
+		// 追番页面开关（数据取自 siteConfig.anime 里的 B 站 UID）
+		anime: true,
 		// 动态页面开关
 		dynamic: true,
 	},
