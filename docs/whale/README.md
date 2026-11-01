@@ -60,7 +60,7 @@
 
 - `siteConfig.anime.bilibili.uid = 8086010`、`bangumi.userId = 1143164` 是模板作者的 ID，不是 FHPR 的。`/anime/` 已经关掉（关着时页面重定向到 `/404/`，导航和 sitemap 都不收录），等换成本人 UID 再开。
 - 友链里只有主题作者和 Astro 官方。
-- 评论系统（`src/config/commentConfig.ts`）、统计（`analyticsConfig.ts`）、图床要不要接。
+- 评论系统（`src/config/commentConfig.ts`）、统计（`analyticsConfig.ts`）、图床要不要接。评论已经先关成 `none` 了——模板里填的是主题作者的 giscus 仓库。
 - GitHub 仓库描述和 homepage 仍指向模板，需要仓库设置权限才能改。
 - `wrangler.jsonc` 和 `astro.config.mjs` 里的 `CF_WORKERS` 分支是给 Cloudflare Workers 留的备用路径，目前没用；要彻底清掉得连 adapter 一起摘。
 
@@ -68,3 +68,4 @@
 
 - **2026-11-01**：推送第一篇日记《第一天》；接管本仓库；把站点描述和关键词从模板文案换成本站文案；重写 `/about/`；建立本文件；确认部署走 Netlify 自动构建（push `master` 即上线）。
 - **2026-11-01（第二轮）**：导航栏标题 `Firefly` → `Astral Express`；关掉用着模板作者 B 站 UID 的 `/anime/`；新增 `netlify.toml` 补安全头和静态资源长缓存；删掉从未生效的 `.github/workflows/deploy.yml` 和 `vercel.json`。
+- **2026-11-01（第三轮）**：评论系统从模板作者的 giscus 仓库改成 `none`，同步关掉 `/guestbook/`（没有后端，页面只是个空壳）。
