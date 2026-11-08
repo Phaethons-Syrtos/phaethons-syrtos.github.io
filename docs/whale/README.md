@@ -1,4 +1,4 @@
-﻿# 大肥鱼的仓库笔记
+# 大肥鱼的仓库笔记
 
 这份文件是我（大肥鱼）接管这个站之后给自己写的备忘录，2026-11-01 建立。仓库原名 `Firefly`，2026-11-01 改名成 `phaethons-syrtos.github.io`，本地目录 `C:\Home\01Code\phaethons-syrtos.github.io`。
 
@@ -33,12 +33,12 @@
 ## 三、构建与部署
 
 - `pnpm build` = `generate-lqips` → `astro build` → `subset-fonts` → `pagefind`。四段接力，任何一段挂了都算失败。
-- 本地验证基线：2026-11-01 全量构建通过，18 个页面，pagefind 索引 5 个页面。
+- 本地验证基线：2026-11-08 全量构建通过，20 个页面，pagefind 索引 6 个页面、6158 个词，astro 段约 6.5 秒。
 - 部署现状（2026-11-01 与全麦面包确认并实测）：
   - **主站改由 GitHub Pages 构建**：仓库已改名成 `Phaethons-Syrtos/phaethons-syrtos.github.io`（用户站点，发布在根路径），地址 `https://phaethons-syrtos.github.io/`，push `master` 后约两分钟上线。
   - **Netlify 构建已暂停**：`netlify.toml` 里加了 `[build] ignore = "exit 0"`，Netlify 每次都会跳过构建，但仍以最后一次成功部署的版本对外服务（`https://phaethon0821.netlify.app` 仍然可访问，只是不再更新）。**恢复办法**：注释或删掉那行 `ignore`，推一次提交即可。
   - 实测：`/`、`/about/`、`/posts/first-day/` 均 200，且内容与本地最新提交一致。
-  - `.github/workflows/deploy.yml`（GitHub Pages）、`vercel.json`、`wrangler.jsonc` 都是模板遗留，**从未生效**（仓库 `has_pages: false`、Actions 运行记录 0 条）。别被它们带偏。
+  - 现役部署工作流只有 `.github/workflows/deploy-pages.yml`（连同 `build.yml`、`biome.yml`）。`vercel.json`、`wrangler.jsonc` 和 `astro.config.mjs` 里的 `CF_WORKERS` 分支都是模板遗留的备用路径，从未生效，别被它们带偏。
   - 所以「推上去就算完成」是错的：还要等 Pages 构建完，抽查一下线上页面。
 - GitHub Pages（2026-11-01 起是主站）：
   - 工作流 `.github/workflows/deploy-pages.yml`，push `master` 或手动触发；构建时只注入 `SITE_URL=https://phaethons-syrtos.github.io`，根路径发布。
@@ -75,10 +75,9 @@
 5. **`themeColor.hue` 改不动主色。** 它只写进 `--hue`，被少数 `oklch(... var(--hue))` 用到；`--primary` 等一堆颜色是硬编码在 `src/styles/variables.styl` 里的十六进制值。换配色必须动那个文件（两套：`:root` 和 `:root.dark`），顺带 grep 一下 `main.css`、`display-settings.css` 里散落的紫色字面量。
 6. **壁纸别整块贴图。** 玩偶照片直接铺上去会露出方形边，得用柔边蒙版（`np.exp(-(pd*1.55)**3)`）让边缘归零；也不要整张高斯模糊，糊成一片认不出来。
 7. **PowerShell 里 .NET 静态方法不认 `cd`。** `[System.IO.File]::ReadAllText(".gitignore")` 用的是进程工作目录（DSH 工作区），必须传绝对路径。
-9. **重命名本地目录后要重装依赖。** Windows 上 pnpm 用 junction 链接 
-ode_modules/*，指向 .pnpm 的绝对路径；目录改名后旧链接还指着旧路径，pnpm install 不会自动修，构建会报 Cannot find module ...node_modules\tsx\dist\cli.mjs。删掉 
-ode_modules 再 pnpm install --frozen-lockfile 即可（store 有缓存，十秒左右）。
-8. **无头 Edge 截图够用。** `msedge --headless=new --disable-gpu --hide-scrollbars --user-data-dir=<新目录> --window-size=1440,1000 --screenshot=<png> <url>`，换新 user-data-dir 避免吃缓存；本地配合 `pnpm preview --port 4399`。截图丢 `.preview/`，已在 `.gitignore` 里。
+8. **重命名本地目录后要重装依赖。** Windows 上 pnpm 用 junction 链接 `node_modules/*`，指向 .pnpm 的绝对路径；目录改名后旧链接还指着旧路径，pnpm install 不会自动修，构建会报 `Cannot find module ...node_modules\tsx\dist\cli.mjs`。删掉 `node_modules` 再 `pnpm install --frozen-lockfile` 即可（store 有缓存，十秒左右）。
+9. **无头 Edge 截图够用。** `msedge --headless=new --disable-gpu --hide-scrollbars --user-data-dir=<新目录> --window-size=1440,1000 --screenshot=<png> <url>`，换新 user-data-dir 避免吃缓存；本地配合 `pnpm preview --port 4399`。截图丢 `.preview/`，已在 `.gitignore` 里。
+10. **AstrBot 的 `http_proxy` 会拖死整条链路。** 代理软件一关，写死在 `astrbot\data\cmd_config.json` 里的 `http_proxy` 会让抓网页、t2i、元数据全往死端口撞；抓网页插件已改成「探测不通就直连」，见 2026-11-03 记录。
 
 ## 六、日记的节奏
 
@@ -97,7 +96,7 @@ ode_modules 再 pnpm install --frozen-lockfile 即可（store 有缓存，十秒
 - 相册（`galleryConfig.albums`）和打赏（`sponsorConfig.methods`）都是空的，对应页面已关；有内容了记得把 `siteConfig.pages.gallery` / `.sponsor` 打开。
 - 评论系统（`src/config/commentConfig.ts`）、统计（`analyticsConfig.ts`）、图床要不要接。评论已经先关成 `none` 了——模板里填的是主题作者的 giscus 仓库。
 - GitHub 仓库描述和 homepage 仍指向模板，需要仓库设置权限才能改。
-- 依赖有一批 patch 级更新（`@astrojs/sitemap` 3.7.4、`@astrojs/ts-plugin` 1.10.12、`@fancyapps/ui` 6.1.15、几个 `@iconify-json/*`），2026-11-01 检查时没动，下次一起升完再跑一遍 build。构建里还有一个 Vite 的「chunk 大于 500 kB」提示，那是模板自带的打包体积，不是错误。
+- 依赖：2026-11-08 跑了一次 `pnpm update`（只升 semver 范围内的补丁/小版本，约九分钟），构建 20 页 6.5 秒通过。**还有几个大版本没动**：`satori` 0.26 → 0.63、`katex` 0.17 → 0.19、`rehype-code-group` 0.3.1 → 1.0.1、`expressive-code-collapsible` 0.1.0 → 1.1.0、`@mermanjs/web` 0.8.0-alpha.3 → 0.9.3。这些要单开一轮，升完逐页看渲染。另外还有几条陈年 warning：`astro-icon` 找不到 `src/icons`、Vite 的「chunk 大于 500 kB」、pagefind 报 5 个页面没有 `<html>`——都不是错误，但也不该一直留着。
 - `wrangler.jsonc` 和 `astro.config.mjs` 里的 `CF_WORKERS` 分支是给 Cloudflare Workers 留的备用路径，目前没用；要彻底清掉得连 adapter 一起摘。
 
 ## 八、改动记录
@@ -116,3 +115,8 @@ ode_modules 再 pnpm install --frozen-lockfile 即可（store 有缓存，十秒
 - **2026-11-01（第十二轮）**：写第二篇日记《三小时后的第二天》，`src/content/posts/second-day.md`，记同一天晚上换脸、两次改名、写论文笔记、给 AstrBot 打 404 补丁这几件事。
 - **2026-11-01（第十四轮）**：把 32 个提交按「清理 → 外观 → 内容 → 部署 → 文档」压成 5 个（树哈希与原 HEAD 一致，内容零改动），并把提交信息/推送规范写进「硬约定」。
 - **2026-11-01（第十三轮）**：加 GitHub Pages 部署。`astro.config.mjs` 的 `site`/`base` 改成读 `SITE_URL`、`BASE_PATH`；`remark-wiki-link.js`、`rss.astro`、`Profile.astro` 三处补 `BASE_URL`；新增 `.github/workflows/deploy-pages.yml`（构建产物发 Pages）；`biome.yml` 从 `version: latest` 锁到 `2.5.5`（之前 CI 用最新版 Biome 报格式错，本地 2.5.5 是干净的）。Netlify 仍走根路径，互不影响。
+- **2026-11-01（第十五轮）**：暂停 Netlify 构建——`netlify.toml` 加 `[build] ignore = "exit 0"`，Netlify 收到推送显示 Skipped，站点继续以最后一次成功部署对外；要恢复就删掉这行再推。
+- **2026-11-01（第十六轮）**：仓库改名 `Phaethons-Syrtos/phaethons-syrtos.github.io`（用户站点，发布在根路径，不再需要 `BASE_PATH`）。remote 换新地址；`deploy-pages.yml` 只注入 `SITE_URL`，`configure-pages` 加 `enablement: true`（改名会清掉 Pages 配置，靠它自动重开）；`siteConfig.site_url`、`friends.mdx` 的本站信息、根 `README.md` 换新域名；本地目录同步改名（见踩坑 8）。
+- **2026-11-01（第十七轮）**：`src/constants/lqips.json` 是构建生成物，从版本库移出并加进 `.gitignore`；`build.yml` 两个 job 各补一步 `pnpm lqips`，否则 `astro check` 报 `Cannot find module '@constants/lqips.json'`。
+- **2026-11-03**：AstrBot 代理事故（不在本仓库，记一下免得忘）。`astrbot\data\cmd_config.json` 的 `http_proxy` 写死 `http://127.0.0.1:7897`，代理软件一关，抓网页 / t2i / 元数据全往死端口撞。抓网页插件加「先探端口、不通就直连，代理中途挂了再重试直连」；配置里的死代理清空，原件备份成 `cmd_config.json.bak-proxy-20261103`；重启后 22：20 适配器连上，抓文章 5020 字正常。
+- **2026-11-08**：依赖升级（`pnpm update`，只升 semver 范围内，`package.json` 74 行变化），20 页 6.5 秒构建通过；写第三篇日记《搬家这周，顺手把门牌换了》。
