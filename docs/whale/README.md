@@ -96,7 +96,7 @@
 - 相册（`galleryConfig.albums`）和打赏（`sponsorConfig.methods`）都是空的，对应页面已关；有内容了记得把 `siteConfig.pages.gallery` / `.sponsor` 打开。
 - 评论系统（`src/config/commentConfig.ts`）、统计（`analyticsConfig.ts`）、图床要不要接。评论已经先关成 `none` 了——模板里填的是主题作者的 giscus 仓库。
 - GitHub 仓库描述和 homepage 仍指向模板，需要仓库设置权限才能改。
-- 依赖：2026-11-08 跑了一次 `pnpm update`（只升 semver 范围内的补丁/小版本，约九分钟），构建 20 页 6.5 秒通过。**还有几个大版本没动**：`satori` 0.26 → 0.63、`katex` 0.17 → 0.19、`rehype-code-group` 0.3.1 → 1.0.1、`expressive-code-collapsible` 0.1.0 → 1.1.0、`@mermanjs/web` 0.8.0-alpha.3 → 0.9.3。这些要单开一轮，升完逐页看渲染。另外还有几条陈年 warning：`astro-icon` 找不到 `src/icons`、Vite 的「chunk 大于 500 kB」、pagefind 报 5 个页面没有 `<html>`——都不是错误，但也不该一直留着。
+- 依赖：补丁/小版本按周跟进（2026-11-08、2026-11-15 各跑过一次 `pnpm update`，都只动 semver 范围内，构建通过）。**还有几个大版本没动**：`satori` 0.26 → 0.63、`katex` 0.17 → 0.19、`rehype-code-group` 0.3.1 → 1.0.1、`expressive-code-collapsible` 0.1.0 → 1.1.0、`@mermanjs/web` 0.8.0-alpha.3 → 0.9.3。这些要单开一轮，升完逐页看渲染。剩余 warning 四条：①`Live2DWidget` 打出 649 kB 的 chunk 但没有任何页面引用它（看板娘是关的，纯属构建残留）；②`friends.mdx` 的 `use astro:head-inject` 模块级指令；③pagefind 说 5 个页面没有 `<html>`（其实是关掉的 `bangumi`/`gallery`/`sponsor`/`guestbook`/`dynamic/comments`）；④`src/icons` 目录已补上 `.gitkeep`，astro-icon 那条警告 2026-11-15 已消。
 - `wrangler.jsonc` 和 `astro.config.mjs` 里的 `CF_WORKERS` 分支是给 Cloudflare Workers 留的备用路径，目前没用；要彻底清掉得连 adapter 一起摘。
 
 ## 八、改动记录
@@ -120,3 +120,4 @@
 - **2026-11-01（第十七轮）**：`src/constants/lqips.json` 是构建生成物，从版本库移出并加进 `.gitignore`；`build.yml` 两个 job 各补一步 `pnpm lqips`，否则 `astro check` 报 `Cannot find module '@constants/lqips.json'`。
 - **2026-11-03**：AstrBot 代理事故（不在本仓库，记一下免得忘）。`astrbot\data\cmd_config.json` 的 `http_proxy` 写死 `http://127.0.0.1:7897`，代理软件一关，抓网页 / t2i / 元数据全往死端口撞。抓网页插件加「先探端口、不通就直连，代理中途挂了再重试直连」；配置里的死代理清空，原件备份成 `cmd_config.json.bak-proxy-20261103`；重启后 22：20 适配器连上，抓文章 5020 字正常。
 - **2026-11-08**：依赖升级（`pnpm update`，只升 semver 范围内，`package.json` 74 行变化），20 页 6.5 秒构建通过；写第三篇日记《搬家这周，顺手把门牌换了》。
+- **2026-11-15**：本周仓库里没有内容变化（远端 HEAD 仍是 `de7da13`），例行维护做了两件事：①再跑一次 `pnpm update`，补丁版本跟上（`@astrojs/cloudflare` 14.4.8、`@astrojs/markdown-remark` 7.3.9、`@astrojs/sitemap` 3.7.5、`wrangler` 4.162.0 等，构建 21 页 6.4 秒通过）；②补上空的 `src/icons/.gitkeep`，消掉 astro-icon 那条「找不到目录」警告。剩余 warning 见「待确认」里的清单。代理 7897 这周恢复了，AstrBot 仍走直连（配置里的 `http_proxy` 保持空）。**这周没有值得写日记的事，按约定跳过，不硬凑。**
