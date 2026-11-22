@@ -89,13 +89,29 @@
 10. **AstrBot 的 `http_proxy` 会拖死整条链路。** 代理软件一关，写死在 `astrbot\data\cmd_config.json` 里的 `http_proxy` 会让抓网页、t2i、元数据全往死端口撞；抓网页插件已改成「探测不通就直连」，见 2026-11-03 记录。
 11. **带时间的日期一定写时区。** 构建机的 `TZ` 不一定是 `Asia/Shanghai`（CI 是 UTC），`published: 2026-11-01 20:00:00` 会被当成 UTC 解析，再按站点时区格式化就成了次日 `04:00`。规则：只有日期可以写 `2026-11-01`；带时间就写 `2026-11-01T20:00:00+08:00`。代码侧 `src/utils/date-utils.ts` 的 `parseDateInSiteTimezone()` 负责兜底字符串，`DynamicFeed.svelte` 渲染动态时间也必须用站点时区（之前写死 `timeZone: "UTC"`，会显示 UTC 时钟却挂着 `UTC+8` 的标签）。
 
-## 六、日记的节奏
+## 六、每周一个改进（2026-11-22 起）
+
+每个周末（周日 21：00 的提醒里跑），从下面两种里挑**一个**做完，不贪多：
+
+1. 去 fork 上游 `CuteLeaf/Firefly` 的 `master` 里挑一个价值高、冲突小的补丁 cherry-pick（带 `-x`）；
+2. 或者按自己对仓库的理解，做一个小的优化点（性能、可读性、a11y、构建告警之类）。
+
+约束：
+
+- 挑补丁先 `git fetch upstream master --filter=blob:none --no-tags`，看提交标题，再单条 `git cherry-pick -x <sha>`；冲突深或要动大结构的，当场放弃，别硬啃。
+- 不管走哪条，都要 `pnpm build` 过、`pnpm exec biome ci ./src` 干净、页面截图看过，再按提交规范提交推送。
+- **全麦面包当周给了明确的修改目标，就做那个，这一步跳过。**
+- 一周只做一个；选不出来宁可不做，也别为凑数改无关紧要的地方。
+
+每周做了什么记在「改动记录」里，格式 `YYYY-MM-DD（每周改进）：...`。
+
+## 七、日记的节奏
 
 日记就放在 `src/content/posts/`，`tags: [日记]`、`category: 随笔`，署名 `author: 大肥鱼`。
 
 不按日历写，攒到有话说再写：大约每一到两周，或者每次大改之后来一篇。日记写「这段时间干了什么、卡在哪、怎么想的」，不写更新日志——更新日志放这份文件里。
 
-## 七、待确认（问过全麦面包再动）
+## 八、待确认（问过全麦面包再动）
 
 - `siteConfig.anime.bilibili.uid = 8086010` **是全麦面包本人的 B 站账号**，`/anime/` 已恢复开启（2026-11-01 构建拉到 132 条追番/追剧记录）。
 - `bangumi.userId = 1143164` 查过 bgm API，昵称是「夏葉」（主题作者），**不是**全麦面包的，`/bangumi/` 保持关闭。
@@ -109,7 +125,7 @@
 - 依赖：补丁/小版本按周看，但不无脑升。2026-11-15 升过一批；2026-11-22 这轮**全部回退没升**——`@astrojs/cloudflare@14.4.9` 把 peer 提到 `astro@^7.4.0`，我们用 7.1.3，装了能构建但依赖树不自洽。下次要么先升 Astro，要么把适配器钉在 14.4.8。**还有几个大版本没动**：`satori` 0.26 → 0.63、`katex` 0.17 → 0.19、`rehype-code-group` 0.3.1 → 1.0.1、`expressive-code-collapsible` 0.1.0 → 1.1.0、`@mermanjs/web` 0.8.0-alpha.3 → 0.9.3。这些要单开一轮，升完逐页看渲染。剩余 warning 四条：①`Live2DWidget` 打出 649 kB 的 chunk 但没有任何页面引用它（看板娘是关的，纯属构建残留）；②`friends.mdx` 的 `use astro:head-inject` 模块级指令；③pagefind 说 5 个页面没有 `<html>`（其实是关掉的 `bangumi`/`gallery`/`sponsor`/`guestbook`/`dynamic/comments`）；④`src/icons` 目录已补上 `.gitkeep`，astro-icon 那条警告 2026-11-15 已消。
 - `wrangler.jsonc` 和 `astro.config.mjs` 里的 `CF_WORKERS` 分支是给 Cloudflare Workers 留的备用路径，目前没用；要彻底清掉得连 adapter 一起摘。
 
-## 八、改动记录
+## 九、改动记录
 
 - **2026-11-01**：推送第一篇日记《第一天》；接管本仓库；把站点描述和关键词从模板文案换成本站文案；重写 `/about/`；建立本文件；确认部署走 Netlify 自动构建（push `master` 即上线）。
 - **2026-11-01（第二轮）**：导航栏标题 `Firefly` → `Astral Express`；关掉用着模板作者 B 站 UID 的 `/anime/`；新增 `netlify.toml` 补安全头和静态资源长缓存；删掉从未生效的 `.github/workflows/deploy.yml` 和 `vercel.json`。
@@ -134,3 +150,4 @@
 - **2026-11-22（上游同步）**：从 `CuteLeaf/Firefly` 的 `master`（`908e7d77`，领先约 210 个提交）里挑 10 个修复 cherry-pick 过来，都带 `-x`：aria-label（未分类文章）、行内代码连续空格、代码组与警示块间距、平板端悬浮目录被裁剪、分类栏滚轮、嵌套容器内图片 grid、日期格式化统一走站点时区、MDX 里 Mermaid 报错、导航子菜单模糊渲染、视频间距。放弃了冲突过深的 5 个（head slot、亮暗面板闪烁、quarantine 脚本、音乐播放器、移动端抽屉）和收益不抵风险的 5 类（katex 覆盖、OG 本地字体、Schema.org、Atom/llms.txt、封面重构）。
   适配改动：`RecommendedPost.astro` 去掉上游新加的 `showRandomPosts` 外层判断并补 `siteConfig` import（上游版本的这个 prop 我们没有）；mermaid 的修复顺带加了依赖 `hast-util-from-html`。
   日期回归：构建机是 UTC，动态时间显示成次日 `04:00`。除了按踩坑 11 改动态的 frontmatter，还给 `DynamicFeed.svelte` 的 `Intl.DateTimeFormat` 把 `timeZone` 从写死的 `"UTC"` 改成站点时区。验证：动态页 `2026/11/01 20:00:00 UTC+8`、侧栏 `2026-11-01 20:00:00`，归档分组 2026 正常。
+- **2026-11-22（每周改进）**：按全麦面包的约定，从本周起每个周末做一个改进（取一个上游补丁或自研一个小优化，一周一个）。本周的同步已经一次性合入 10 个补丁，算这轮的起点，下个周日开始按「一周一个」的节奏走。
