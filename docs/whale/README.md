@@ -52,6 +52,7 @@
 - 但改动已经很大：配色、文案、导航、部署、目录名全换过，历史也重写过（32 个提交压成 5 个），跟上游的 diff 基本没法读。
 - 2026-11-22 对比：从 fork 点 `3e1d0c8` 到上游 `master`，上游领先约 210 个提交（日期时区、行内代码空格、侧栏平板回退、Mermaid 0.9、katex 版本覆盖之类的修复）；上游 11-15 还在推。
 - **别 `git merge upstream/master`**：品牌和配置全改过，合并只会撕成一片。要取上游的修复就 `git cherry-pick` 单个提交，取完照例 `pnpm build` + 页面截图核对。
+- 2026-11-22 已同步第一批 10 个修复（见改动记录），剩下的按需再挑；同步前先 `git fetch upstream master --filter=blob:none`，日志看 `.preview/upstream-log.txt`。
 - 上游发版快，定期看它 master 的提交标题就行，不必追平。
 
 ## 四、硬约定
@@ -86,6 +87,7 @@
 8. **重命名本地目录后要重装依赖。** Windows 上 pnpm 用 junction 链接 `node_modules/*`，指向 .pnpm 的绝对路径；目录改名后旧链接还指着旧路径，pnpm install 不会自动修，构建会报 `Cannot find module ...node_modules\tsx\dist\cli.mjs`。删掉 `node_modules` 再 `pnpm install --frozen-lockfile` 即可（store 有缓存，十秒左右）。
 9. **无头 Edge 截图够用。** `msedge --headless=new --disable-gpu --hide-scrollbars --user-data-dir=<新目录> --window-size=1440,1000 --screenshot=<png> <url>`，换新 user-data-dir 避免吃缓存；本地配合 `pnpm preview --port 4399`。截图丢 `.preview/`，已在 `.gitignore` 里。
 10. **AstrBot 的 `http_proxy` 会拖死整条链路。** 代理软件一关，写死在 `astrbot\data\cmd_config.json` 里的 `http_proxy` 会让抓网页、t2i、元数据全往死端口撞；抓网页插件已改成「探测不通就直连」，见 2026-11-03 记录。
+11. **带时间的日期一定写时区。** 构建机的 `TZ` 不一定是 `Asia/Shanghai`（CI 是 UTC），`published: 2026-11-01 20:00:00` 会被当成 UTC 解析，再按站点时区格式化就成了次日 `04:00`。规则：只有日期可以写 `2026-11-01`；带时间就写 `2026-11-01T20:00:00+08:00`。代码侧 `src/utils/date-utils.ts` 的 `parseDateInSiteTimezone()` 负责兜底字符串，`DynamicFeed.svelte` 渲染动态时间也必须用站点时区（之前写死 `timeZone: "UTC"`，会显示 UTC 时钟却挂着 `UTC+8` 的标签）。
 
 ## 六、日记的节奏
 
@@ -129,3 +131,6 @@
 - **2026-11-03**：AstrBot 代理事故（不在本仓库，记一下免得忘）。`astrbot\data\cmd_config.json` 的 `http_proxy` 写死 `http://127.0.0.1:7897`，代理软件一关，抓网页 / t2i / 元数据全往死端口撞。抓网页插件加「先探端口、不通就直连，代理中途挂了再重试直连」；配置里的死代理清空，原件备份成 `cmd_config.json.bak-proxy-20261103`；重启后 22：20 适配器连上，抓文章 5020 字正常。
 - **2026-11-08**：依赖升级（`pnpm update`，只升 semver 范围内，`package.json` 74 行变化），20 页 6.5 秒构建通过；写第三篇日记《搬家这周，顺手把门牌换了》。
 - **2026-11-15**：本周仓库里没有内容变化（远端 HEAD 仍是 `de7da13`），例行维护做了两件事：①再跑一次 `pnpm update`，补丁版本跟上（`@astrojs/cloudflare` 14.4.8、`@astrojs/markdown-remark` 7.3.9、`@astrojs/sitemap` 3.7.5、`wrangler` 4.162.0 等，构建 21 页 6.4 秒通过）；②补上空的 `src/icons/.gitkeep`，消掉 astro-icon 那条「找不到目录」警告。剩余 warning 见「待确认」里的清单。代理 7897 这周恢复了，AstrBot 仍走直连（配置里的 `http_proxy` 保持空）。**这周没有值得写日记的事，按约定跳过，不硬凑。**
+- **2026-11-22（上游同步）**：从 `CuteLeaf/Firefly` 的 `master`（`908e7d77`，领先约 210 个提交）里挑 10 个修复 cherry-pick 过来，都带 `-x`：aria-label（未分类文章）、行内代码连续空格、代码组与警示块间距、平板端悬浮目录被裁剪、分类栏滚轮、嵌套容器内图片 grid、日期格式化统一走站点时区、MDX 里 Mermaid 报错、导航子菜单模糊渲染、视频间距。放弃了冲突过深的 5 个（head slot、亮暗面板闪烁、quarantine 脚本、音乐播放器、移动端抽屉）和收益不抵风险的 5 类（katex 覆盖、OG 本地字体、Schema.org、Atom/llms.txt、封面重构）。
+  适配改动：`RecommendedPost.astro` 去掉上游新加的 `showRandomPosts` 外层判断并补 `siteConfig` import（上游版本的这个 prop 我们没有）；mermaid 的修复顺带加了依赖 `hast-util-from-html`。
+  日期回归：构建机是 UTC，动态时间显示成次日 `04:00`。除了按踩坑 11 改动态的 frontmatter，还给 `DynamicFeed.svelte` 的 `Intl.DateTimeFormat` 把 `timeZone` 从写死的 `"UTC"` 改成站点时区。验证：动态页 `2026/11/01 20:00:00 UTC+8`、侧栏 `2026-11-01 20:00:00`，归档分组 2026 正常。
