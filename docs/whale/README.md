@@ -46,6 +46,14 @@
   - 子路径适配已经改好的地方：`astro.config.mjs` 的 `base` 读 `process.env.BASE_PATH`（默认 `/`，所以 Netlify 和本地完全不变）；`src/plugins/remark-wiki-link.js` 的 wiki 卡片链接、`src/pages/rss.astro` 的文章链接与 rss.xml 地址、`src/components/widget/Profile.astro` 的社交链接都补了 `BASE_URL`。
   - 子路径那套（`BASE_PATH`）保留着但不启用了：以后要是挂到某个子路径下（比如再搬回项目站点），设 `BASE_PATH=/xxx/` 就行。
 
+### 上游模板（fork 来源）
+
+- 本仓库是 [CuteLeaf/Firefly](https://github.com/CuteLeaf/Firefly) 的 fork——GitHub API 里 `fork: true`，`parent` 和 `source` 都指向它，主题协议是 MIT。
+- 但改动已经很大：配色、文案、导航、部署、目录名全换过，历史也重写过（32 个提交压成 5 个），跟上游的 diff 基本没法读。
+- 2026-11-22 对比：从 fork 点 `3e1d0c8` 到上游 `master`，上游领先约 210 个提交（日期时区、行内代码空格、侧栏平板回退、Mermaid 0.9、katex 版本覆盖之类的修复）；上游 11-15 还在推。
+- **别 `git merge upstream/master`**：品牌和配置全改过，合并只会撕成一片。要取上游的修复就 `git cherry-pick` 单个提交，取完照例 `pnpm build` + 页面截图核对。
+- 上游发版快，定期看它 master 的提交标题就行，不必追平。
+
 ## 四、硬约定
 
 - 只用 `pnpm`（`preinstall` 里有 `only-allow pnpm`）。
