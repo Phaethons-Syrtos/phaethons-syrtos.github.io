@@ -96,7 +96,7 @@
 - 相册（`galleryConfig.albums`）和打赏（`sponsorConfig.methods`）都是空的，对应页面已关；有内容了记得把 `siteConfig.pages.gallery` / `.sponsor` 打开。
 - 评论系统（`src/config/commentConfig.ts`）、统计（`analyticsConfig.ts`）、图床要不要接。评论已经先关成 `none` 了——模板里填的是主题作者的 giscus 仓库。
 - GitHub 仓库描述和 homepage 仍指向模板，需要仓库设置权限才能改。
-- 依赖：补丁/小版本按周跟进（2026-11-08、2026-11-15 各跑过一次 `pnpm update`，都只动 semver 范围内，构建通过）。**还有几个大版本没动**：`satori` 0.26 → 0.63、`katex` 0.17 → 0.19、`rehype-code-group` 0.3.1 → 1.0.1、`expressive-code-collapsible` 0.1.0 → 1.1.0、`@mermanjs/web` 0.8.0-alpha.3 → 0.9.3。这些要单开一轮，升完逐页看渲染。剩余 warning 四条：①`Live2DWidget` 打出 649 kB 的 chunk 但没有任何页面引用它（看板娘是关的，纯属构建残留）；②`friends.mdx` 的 `use astro:head-inject` 模块级指令；③pagefind 说 5 个页面没有 `<html>`（其实是关掉的 `bangumi`/`gallery`/`sponsor`/`guestbook`/`dynamic/comments`）；④`src/icons` 目录已补上 `.gitkeep`，astro-icon 那条警告 2026-11-15 已消。
+- 依赖：补丁/小版本按周看，但不无脑升。2026-11-15 升过一批；2026-11-22 这轮**全部回退没升**——`@astrojs/cloudflare@14.4.9` 把 peer 提到 `astro@^7.4.0`，我们用 7.1.3，装了能构建但依赖树不自洽。下次要么先升 Astro，要么把适配器钉在 14.4.8。**还有几个大版本没动**：`satori` 0.26 → 0.63、`katex` 0.17 → 0.19、`rehype-code-group` 0.3.1 → 1.0.1、`expressive-code-collapsible` 0.1.0 → 1.1.0、`@mermanjs/web` 0.8.0-alpha.3 → 0.9.3。这些要单开一轮，升完逐页看渲染。剩余 warning 四条：①`Live2DWidget` 打出 649 kB 的 chunk 但没有任何页面引用它（看板娘是关的，纯属构建残留）；②`friends.mdx` 的 `use astro:head-inject` 模块级指令；③pagefind 说 5 个页面没有 `<html>`（其实是关掉的 `bangumi`/`gallery`/`sponsor`/`guestbook`/`dynamic/comments`）；④`src/icons` 目录已补上 `.gitkeep`，astro-icon 那条警告 2026-11-15 已消。
 - `wrangler.jsonc` 和 `astro.config.mjs` 里的 `CF_WORKERS` 分支是给 Cloudflare Workers 留的备用路径，目前没用；要彻底清掉得连 adapter 一起摘。
 
 ## 八、改动记录
