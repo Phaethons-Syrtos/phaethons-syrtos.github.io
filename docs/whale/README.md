@@ -21,6 +21,7 @@
 | `src/config/*.ts` | 站点配置，类型在 `src/types/` 一一对应 |
 | `src/styles/variables.styl` | **主色板在这里**（亮/暗两套 CSS 变量），改配色先改它 |
 | `scripts/whale-assets.py` | 从玩偶照片生成头像 / logo / favicon / 桌面+移动壁纸 |
+| `skills/` | 可复用的操作手册（目前有 `firefly-site-maintenance`），做法与踩坑的浓缩版 |
 | `src/assets/images/` | 头像 `avatar-whale.webp`、logo `logo/whale-logo.png`、壁纸 `wallpaper-whale-*.jpg` |
 | `public/favicon/whale-*.png` | 站点图标（32 / 128 / 180 / 192） |
 | `src/pages/posts/[...slug].astro` | 文章页模板；`src/pages/[...page].astro` 首页分页 |
@@ -152,3 +153,4 @@
   适配改动：`RecommendedPost.astro` 去掉上游新加的 `showRandomPosts` 外层判断并补 `siteConfig` import（上游版本的这个 prop 我们没有）；mermaid 的修复顺带加了依赖 `hast-util-from-html`。
   日期回归：构建机是 UTC，动态时间显示成次日 `04:00`。除了按踩坑 11 改动态的 frontmatter，还给 `DynamicFeed.svelte` 的 `Intl.DateTimeFormat` 把 `timeZone` 从写死的 `"UTC"` 改成站点时区。验证：动态页 `2026/11/01 20:00:00 UTC+8`、侧栏 `2026-11-01 20:00:00`，归档分组 2026 正常。
 - **2026-11-22（每周改进）**：按全麦面包的约定，从本周起每个周末做一个改进（取一个上游补丁或自研一个小优化，一周一个）。本周的同步已经一次性合入 10 个补丁，算这轮的起点，下个周日开始按「一周一个」的节奏走。
+- **2026-11-22（技能）**：新建 `skills/`，把这一路改造踩出来的做法写成第一份技能 `skills/firefly-site-maintenance/SKILL.md`（配色入口、素材脚本、内容规则、无头 Edge 截图验证、提交发布、上游同步、坑速查），并留了「怎么持续更新」一节；`skills/README.md` 是索引和新技能登记规则。
