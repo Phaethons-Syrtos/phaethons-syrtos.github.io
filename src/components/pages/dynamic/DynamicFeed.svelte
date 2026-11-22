@@ -171,7 +171,7 @@ function createItem(entry: DynamicData) {
 			time.textContent = new Intl.DateTimeFormat(
 				document.documentElement.lang || undefined,
 				{
-					timeZone: "UTC",
+					timeZone: timezone || "UTC",
 					year: "numeric",
 					month: "2-digit",
 					day: "2-digit",
