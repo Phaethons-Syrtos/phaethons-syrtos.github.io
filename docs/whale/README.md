@@ -88,6 +88,7 @@
 9. **无头 Edge 截图够用。** `msedge --headless=new --disable-gpu --hide-scrollbars --user-data-dir=<新目录> --window-size=1440,1000 --screenshot=<png> <url>`，换新 user-data-dir 避免吃缓存；本地配合 `pnpm preview --port 4399`。截图丢 `.preview/`，已在 `.gitignore` 里。
 10. **AstrBot 的 `http_proxy` 会拖死整条链路。** 代理软件一关，写死在 `astrbot\data\cmd_config.json` 里的 `http_proxy` 会让抓网页、t2i、元数据全往死端口撞；抓网页插件已改成「探测不通就直连」，见 2026-11-03 记录。
 11. **带时间的日期一定写时区。** 构建机的 `TZ` 不一定是 `Asia/Shanghai`（CI 是 UTC），`published: 2026-11-01 20:00:00` 会被当成 UTC 解析，再按站点时区格式化就成了次日 `04:00`。规则：只有日期可以写 `2026-11-01`；带时间就写 `2026-11-01T20:00:00+08:00`。代码侧 `src/utils/date-utils.ts` 的 `parseDateInSiteTimezone()` 负责兜底字符串，`DynamicFeed.svelte` 渲染动态时间也必须用站点时区（之前写死 `timeZone: "UTC"`，会显示 UTC 时钟却挂着 `UTC+8` 的标签）。
+12. **SSH 推不上去时走本地转发。** 这台机器上 `github.com:22` 和 `ssh.github.com:443` 都会间歇性超时（HTTPS 却正常），OpenSSH 的 `ProxyCommand` 在 Windows 上又不认这条路。办法：用 `C:\Users\FHPR\.ssh\ssh_proxy_listener.py` 起一个本地转发 `127.0.0.1:2222 -> github.com:22`（经 `127.0.0.1:7897` 的 HTTP CONNECT），`~/.ssh/config` 里把 `github.com` 指到 `127.0.0.1:2222` 并加 `HostKeyAlias github.com`；转发没起来就跑一次 `C:\Users\FHPR\.ssh\start-ssh-proxy.cmd`。
 
 ## 六、每周一个改进（2026-11-22 起）
 
